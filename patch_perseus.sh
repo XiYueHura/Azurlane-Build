@@ -43,7 +43,7 @@ download_azurlane () {
     if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
         echo "Downloading CN version APK from fixed URL"
         # 直接下载到正确的文件名
-        curl -o "${bundle_id}.apk" "$cn_download_url"
+        curl -K -L "$cn_download_url" -o "${bundle_id}.apk"
         # wget -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" "$cn_download_url" -O "${bundle_id}.apk"
         if [ $? -eq 0 ] && [ -f "${bundle_id}.apk" ]; then
             echo "CN APK downloaded successfully!"
