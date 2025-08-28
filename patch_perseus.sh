@@ -43,7 +43,7 @@ download_azurlane () {
     if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
         echo "Downloading CN version APK from fixed URL"
         # 直接下载到正确的文件名
-        wget "$cn_download_url" -O "${bundle_id}.apk"
+        wget --no-check-certificate "$cn_download_url" -O "${bundle_id}.apk"
         if [ $? -eq 0 ] && [ -f "${bundle_id}.apk" ]; then
             echo "CN APK downloaded successfully!"
         else
