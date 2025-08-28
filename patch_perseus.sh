@@ -109,12 +109,12 @@ fi
 
 echo "Patching Azur Lane with Perseus"
 # 确保smali文件存在
-if [ ! -f "${bundle_id}/smali_classes2/com/unity3d/player/UnityPlayerActivity.smali" ]; then
+if [ ! -f "${bundle_id}/smali_classes3/com/unity3d/player/UnityPlayerActivity.smali" ]; then
     echo "ERROR: UnityPlayerActivity.smali not found!"
     exit 1
 fi
 
-oncreate=$(grep -n -m 1 'onCreate' ${bundle_id}/smali_classes2/com/unity3d/player/UnityPlayerActivity.smali | sed  's/[0-9]*\:\(.*\)/\1/')
+oncreate=$(grep -n -m 1 'onCreate' ${bundle_id}/smali_classes3/com/unity3d/player/UnityPlayerActivity.smali | sed  's/[0-9]*\:\(.*\)/\1/')
 if [ -z "$oncreate" ]; then
     echo "ERROR: onCreate method not found!"
     exit 1
