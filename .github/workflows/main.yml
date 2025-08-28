@@ -22,7 +22,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Java JDK
         uses: actions/setup-java@v3.3.0
@@ -37,7 +37,7 @@ jobs:
 
       # libPerseus build process
       - name: checkout Perseus
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: "n0k0m3/Perseus"
           path: "Perseus"
@@ -46,6 +46,7 @@ jobs:
       - name: run Perseus build
         run: |
           cd Perseus
+          chmod +x build.sh
           ./build.sh
 
       # APK build process
