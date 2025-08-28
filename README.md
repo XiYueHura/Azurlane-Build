@@ -32,6 +32,7 @@
 
 ## 参考内容以及仓库
 1. https://github.com/Egoistically/Perseus
-2. https://github.com/n0k0m3/PerseusCI
-3. https://github.com/feathers-l/AzurLaneBiliBili-Fix
-4. https://github.com/feathers-l/azurlane
+2. https://github.com/JMBQ/azurlane
+3. https://github.com/n0k0m3/PerseusCI
+4. https://github.com/feathers-l/AzurLaneBiliBili-Fix
+5. https://github.com/feathers-l/azurlane
