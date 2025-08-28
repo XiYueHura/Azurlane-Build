@@ -33,9 +33,9 @@ download_dependencies () {
     artifacts["apktool.jar"]="iBotPeaches/Apktool apktool .jar"
 
     for artifact in "${!artifacts[@]}"; do
-        if [ ! -f "$artifact" ]; then
+        if [ ! -f $artifact ]; then
             echo "正在下载 $artifact ..."
-            curl -L -o "$artifact" $(get_artifact_download_url "${artifacts[$artifact]}")
+            curl -L -o $artifact $(get_artifact_download_url ${artifacts[$artifact]})
             if [ $? -ne 0 ]; then
                 echo "错误: 下载 $artifact 失败！"
                 exit 1
