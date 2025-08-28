@@ -9,7 +9,7 @@
 - **日服 (JP)**: com.YoStarJP.AzurLane （未测试）
 - **韩服 (KR)**: kr.txwy.and.blhx （未测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （未测试）
-- **国服 (CN)**: com.bilibili.azurlane （构建正常，功能似乎异常？）
+- **国服 (CN)**: com.bilibili.azurlane （构建正常，功能似乎异常？MuMu模拟器未闪退，皮肤功能失效，其余功能未测试）
 
 ## 重要说明
 - 脚本会自动从 APKPure 下载最新的基础 APK 文件，对于国服，只会从固定的链接下载 APK 文件
