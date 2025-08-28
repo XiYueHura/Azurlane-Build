@@ -35,6 +35,10 @@ jobs:
         with:
           ndk-version: r26b
 
+      - name: Install build-tools
+        run: |
+          yes | sdkmanager --install "build-tools;32.0.0"
+
       # libPerseus build process
       - name: checkout Perseus
         uses: actions/checkout@v4
