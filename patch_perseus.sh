@@ -11,7 +11,8 @@ fi
 bundle_id=$1
 
 # Fixed download URL for CN version (APK format)
-cn_download_url="https://pkg.biligame.com/games/blhx_9.6.11_0814_1_20250819_110937_2a0c3.apk"
+# cn_download_url="https://pkg.biligame.com/games/blhx_9.6.11_0814_1_20250819_110937_2a0c3.apk"
+cn_download_url="https://drive.usercontent.google.com/download?id=1_K7EOoq3Ku3JS63PQpeAv2-t6P-4WhTh&export=download&confirm=t&uuid=f3132d29-4529-4e99-a779-bb5c977849e1&at=AN8xHoqpgPXiw9DWtc24IjYgswtd%3A1756390813525"
 
 # Download apkeep
 get_artifact_download_url () {
@@ -43,8 +44,8 @@ download_azurlane () {
     if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
         echo "Downloading CN version APK from fixed URL"
         # 直接下载到正确的文件名
-        # curl -k -L "$cn_download_url" -o "${bundle_id}.apk"
-        wget -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" "$cn_download_url" -O "${bundle_id}.apk"
+        curl "$cn_download_url" -o "${bundle_id}.apk"
+        # wget -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" "$cn_download_url" -O "${bundle_id}.apk"
         if [ $? -eq 0 ] && [ -f "${bundle_id}.apk" ]; then
             echo "CN APK downloaded successfully!"
         else
