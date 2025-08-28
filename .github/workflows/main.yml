@@ -30,10 +30,8 @@ jobs:
           java-version: "17"
           distribution: "adopt"
 
-      - name: Setup Android NDK
-        uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r26b
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Install build-tools
         run: |
