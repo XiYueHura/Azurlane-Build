@@ -10,6 +10,9 @@ fi
 # Set bundle id
 bundle_id=$1
 
+# Fixed download URL for CN version (APK format)
+cn_download_url="https://pkg.biligame.com/games/blhx_9.6.11_0814_1_20250819_110937_2a0c3.apk"  # 请替换为实际的CN版本APK下载链接
+
 # Download apkeep
 get_artifact_download_url () {
     # Usage: get_download_url <repo_name> <artifact_name> <file_type>
@@ -36,24 +39,51 @@ chmod +x apkeep
 
 # Download Azur Lane
 download_azurlane () {
-    if [ ! -f "${bundle_id}.xapk" ]; then
-    ./apkeep -a ${bundle_id} .
+    # Check if downloading CN version (APK format)
+    if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
+        echo "Downloading CN version APK from fixed URL"
+        curl -L -o "${bundle_id}.apk" "$cn_download_url"
+    else
+        # Use original apkeep method for other versions (XAPK format)
+        if [ ! -f "${bundle_id}.xapk" ]; then
+            ./apkeep -a ${bundle_id} .
+        fi
     fi
 }
 
-if [ ! -f "${bundle_id}.apk" ]; then
-    echo "Get Azur Lane apk"
-    download_azurlane
-    unzip -o ${bundle_id}.xapk ${bundle_id}.apk -d AzurLane
-    unzip -o ${bundle_id}.xapk manifest.json -d AzurLane
-    cp AzurLane/${bundle_id}.apk .
+# For CN version (direct APK download)
+if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
+    if [ ! -f "${bundle_id}.apk" ]; then
+        echo "Get Azur Lane CN apk"
+        download_azurlane
+        # Create AzurLane directory and copy APK for consistency
+        mkdir -p AzurLane
+        cp "${bundle_id}.apk" AzurLane/
+    fi
+else
+    # For other versions (XAPK format)
+    if [ ! -f "${bundle_id}.apk" ]; then
+        echo "Get Azur Lane apk for ${bundle_id}"
+        download_azurlane
+        unzip -o ${bundle_id}.xapk ${bundle_id}.apk -d AzurLane
+        unzip -o ${bundle_id}.xapk manifest.json -d AzurLane
+        cp AzurLane/${bundle_id}.apk .
+    fi
 fi
 
 echo "Decompile Azur Lane apk"
-java -jar apktool.jar -q -f d ${bundle_id}.apk
+java -jar apktool.jar -f d ${bundle_id}.apk
+if [ $? -ne 0 ]; then
+    echo "Decompile failed!"
+    exit 1
+fi
 
 echo "Copy Perseus libs"
 cp -r Perseus/src/libs/. ${bundle_id}/lib/
+if [ $? -ne 0 ]; then
+    echo "Copy libs failed!"
+    exit 1
+fi
 
 echo "Patching Azur Lane with Perseus"
 oncreate=$(grep -n -m 1 'onCreate' ${bundle_id}/smali_classes2/com/unity3d/player/UnityPlayerActivity.smali | sed  's/[0-9]*\:\(.*\)/\1/')
@@ -61,8 +91,17 @@ sed -ir "s#\($oncreate\)#.method private static native init(Landroid/content/Con
 sed -ir "s#\($oncreate\)#\1\n    const-string v0, \"Perseus\"\n\n\    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V\n\n    invoke-static {p0}, Lcom/unity3d/player/UnityPlayerActivity;->init(Landroid/content/Context;)V\n#" ${bundle_id}/smali_classes2/com/unity3d/player/UnityPlayerActivity.smali
 
 echo "Build Patched Azur Lane apk"
-java -jar apktool.jar -q -f b ${bundle_id} -o build/${bundle_id}.patched.apk
+java -jar apktool.jar -f b ${bundle_id} -o build/${bundle_id}.patched.apk
+if [ $? -ne 0 ]; then
+    echo "Build failed!"
+    exit 1
+fi
 
 echo "Set Github Release version"
-version=($(jq -r '.version_name' AzurLane/manifest.json))
-echo "PERSEUS_VERSION=$(echo ${version})" >> $GITHUB_ENV
+# For CN version, use unknown version or extract from APK if possible
+if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
+    echo "PERSEUS_VERSION=9.6.11" >> $GITHUB_ENV
+else
+    version=($(jq -r '.version_name' AzurLane/manifest.json))
+    echo "PERSEUS_VERSION=$(echo ${version})" >> $GITHUB_ENV
+fi
