@@ -65,12 +65,47 @@ jobs:
 
       - name: Zipalign and Sign Android release
         run: ./zipalign_sign.sh
-                    
-      # Publish APK
+
+      # 创建分卷压缩包
+      - name: Create split archives
+        run: |
+          # 设置分卷大小（这里设置为50MB，可根据需要调整）
+          SPLIT_SIZE=800M
+          
+          # 查找生成的APK文件
+          APK_FILE=$(find build -name "*.apk" | head -n 1)
+          
+          if [ -z "$APK_FILE" ]; then
+            echo "Error: No APK file found in build directory!"
+            exit 1
+          fi
+          
+          # 创建分卷压缩包（仅存储，不压缩）
+          echo "Creating split archives for: $APK_FILE"
+          zip -0 -r -s $SPLIT_SIZE "perseus_split.zip" "$APK_FILE"
+          
+          # 重命名分卷文件
+          for file in perseus_split.z*; do
+            if [[ $file == perseus_split.zip ]]; then
+              mv "$file" "perseus_split.zip.00"
+            else
+              # 确保分卷编号是两位数
+              part_num=${file##perseus_split.z}
+              if [ ${#part_num} -eq 1 ]; then
+                mv "$file" "perseus_split.zip.0$part_num"
+              fi
+            fi
+          done
+          
+          # 列出生成的分卷文件
+          echo "Generated split files:"
+          ls -la perseus_split.zip.*
+
+      # 发布APK和分卷压缩包
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           tag: "${{ github.event.inputs.region }}-v${{ env.PERSEUS_VERSION }}"
-          name: "Perseus Release ${{ github.event.inputs.region }} v${{ env.PERSEUS_VERSION }}"
-          artifacts: "build/*.apk"
+          name: "Azurlane Perseus ${{ github.event.inputs.region }} Release v${{ env.PERSEUS_VERSION }}"
+          artifacts: "build/*.apk,perseus_split.zip.*"
           allowUpdates: true
