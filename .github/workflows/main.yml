@@ -80,9 +80,9 @@ jobs:
 
       # 步骤8：分卷压缩 APK
       - name: Create split archives
-        run: |
-          # 设置分卷大小为 800MB
-          SPLIT_SIZE=800m
+        run: |  
+          # 删除之前可能遗留的分卷压缩包文件
+          rm -f "Azurlane Perseus.7z"*
           
           # 查找生成的 APK 文件，使用 find 命令可以确保即使文件名有变化也能找到
           APK_FILE=$(find build -name "*.apk" -print -quit)
@@ -92,21 +92,12 @@ jobs:
             exit 1
           fi
           
-          # 定义输出压缩包的前缀
-          ARCHIVE_PREFIX="Azurlane Perseus"
-          
           echo "Creating split archives for: $APK_FILE"
-          
-          # 使用 7z 创建分卷压缩包，并指定为 '仅存储' 模式
-          # -a: 添加文件
-          # -tzip: 格式为 zip
-          # -mx=0: 压缩级别为 0 (仅存储，无压缩)
-          # -v${SPLIT_SIZE}: 分卷大小
-          # -y: 对所有提示回答 Yes
-          7z a -tzip -mx=0 -v${SPLIT_SIZE} "${ARCHIVE_PREFIX}.zip" "$APK_FILE"
+
+          7z a -v800M "Azurlane Perseus.7z" "$APK_FILE"
           
           echo "Generated split files:"
-          ls -lh ${ARCHIVE_PREFIX}.zip.*
+          ls -lh "Azurlane Perseus.7z"*
 
       # 步骤9：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
@@ -117,6 +108,6 @@ jobs:
           # 使用 `name` 参数定义 Release 的名称
           name: "Azurlane Perseus ${{ github.event.inputs.region }} Release v${{ env.PERSEUS_VERSION }}"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "Azurlane Perseus.zip.*"
+          artifacts: "Azurlane Perseus.7z.*"
           # 允许更新已存在的 Release
           allowUpdates: true
