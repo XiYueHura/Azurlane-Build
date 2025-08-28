@@ -72,7 +72,7 @@ else
 fi
 
 echo "Decompile Azur Lane apk"
-java -jar apktool.jar -f d ${bundle_id}.apk
+java -jar apktool.jar d -f ${bundle_id}.apk
 if [ $? -ne 0 ]; then
     echo "Decompile failed!"
     exit 1
@@ -91,7 +91,7 @@ sed -ir "s#\($oncreate\)#.method private static native init(Landroid/content/Con
 sed -ir "s#\($oncreate\)#\1\n    const-string v0, \"Perseus\"\n\n\    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V\n\n    invoke-static {p0}, Lcom/unity3d/player/UnityPlayerActivity;->init(Landroid/content/Context;)V\n#" ${bundle_id}/smali_classes2/com/unity3d/player/UnityPlayerActivity.smali
 
 echo "Build Patched Azur Lane apk"
-java -jar apktool.jar -f b ${bundle_id} -o build/${bundle_id}.patched.apk
+java -jar apktool.jar b -f ${bundle_id} -o build/${bundle_id}.patched.apk
 if [ $? -ne 0 ]; then
     echo "Build failed!"
     exit 1
