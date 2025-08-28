@@ -42,7 +42,8 @@ download_azurlane () {
     # Check if downloading CN version (APK format)
     if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
         echo "Downloading CN version APK from fixed URL"
-        curl -L -o "${bundle_id}.apk" "$cn_download_url"
+        wget "$cn_download_url" -O com.bilibili.AzurLane.apk -q
+        echo "APK downloaded！"
     else
         # Use original apkeep method for other versions (XAPK format)
         if [ ! -f "${bundle_id}.xapk" ]; then
