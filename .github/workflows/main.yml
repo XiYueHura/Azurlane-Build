@@ -37,20 +37,6 @@ jobs:
         run: |
           yes | sdkmanager --install "build-tools;32.0.0"
 
-      # libPerseus build process
-      - name: checkout Perseus
-        uses: actions/checkout@v4
-        with:
-          repository: "n0k0m3/Perseus"
-          path: "Perseus"
-          ref: "src"
-
-      - name: run Perseus build
-        run: |
-          cd Perseus
-          chmod +x build.sh
-          ./build.sh
-
       # APK build process
       - name: Determine Bundle ID
         id: bundle_id

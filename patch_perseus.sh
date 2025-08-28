@@ -60,10 +60,17 @@ download_azurlane () {
     fi
 }
 
+download_azurlane_JMBQ_Lib () {
+    if [ ! -d "JMBQ" ]; then
+    git clone https://github.com/feathers-l/azurlane JMBQ
+fi
+}
+
 # 统一处理所有版本
 if [ ! -f "${bundle_id}.apk" ]; then
     echo "Getting Azur Lane apk for ${bundle_id}"
     download_azurlane
+    download_azurlane_JMBQ_Lib
     
     # 对于非CN版本，需要从xapk中提取apk
     if [ "$bundle_id" != "com.bilibili.azurlane" ]; then
@@ -101,7 +108,7 @@ if [ ! -d "${bundle_id}/lib/" ]; then
     echo "ERROR: Directory ${bundle_id}/lib/ does not exist!"
     exit 1
 fi
-cp -r Perseus/src/libs/. ${bundle_id}/lib/
+cp -r JMBQ/. ${bundle_id}/lib/
 if [ $? -ne 0 ]; then
     echo "Copy libs failed!"
     exit 1
