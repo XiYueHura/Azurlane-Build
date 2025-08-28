@@ -5,11 +5,11 @@
 此仓库模板允许您使用 GitHub Actions 来构建 Perseus。这对于不想在自己机器上搭建构建环境的人来说非常有用。
 
 ## 碧蓝航线（Azur Lane）区域版本
-- **国际服 (EN)**: com.YoStarEN.AzurLane
-- **日服 (JP)**: com.YoStarJP.AzurLane
-- **韩服 (KR)**: kr.txwy.and.blhx
-- **台服 (TW)**: com.hkmanjuu.azurlane.gp
-- **国服 (CN)**: com.bilibili.azurlane
+- **国际服 (EN)**: com.YoStarEN.AzurLane （未测试）
+- **日服 (JP)**: com.YoStarJP.AzurLane （未测试）
+- **韩服 (KR)**: kr.txwy.and.blhx （未测试）
+- **台服 (TW)**: com.hkmanjuu.azurlane.gp （未测试）
+- **国服 (CN)**: com.bilibili.azurlane （构建正常）
 
 ## 重要说明
 - 脚本会自动从 APKPure 下载最新的基础 APK 文件，对于国服，只会从固定的链接下载 APK 文件
@@ -24,4 +24,4 @@
 ## 如何构建
 1.  进入 Actions -> All workflows -> Perseus Build。
 2.  选择您想要构建的区域版本，并运行工作流。
-3.  从草稿版本发布 (draft releases) 中下载构建好的 APK 文件。
+3.  从草稿版本发布Releases中下载构建好的 APK 文件。
