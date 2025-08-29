@@ -1,4 +1,4 @@
-# Azurlane Perseus
+# Azurlane JMBQ 一键构建
 
 **声明：本人不会啥代码，只能勉强看懂，大部分是借助Ai完成的修改，存在很多问题，有些部分很抽象，欢迎各位大佬提出建议**
 
@@ -9,7 +9,7 @@
 - **日服 (JP)**: com.YoStarJP.AzurLane （未测试）
 - **韩服 (KR)**: kr.txwy.and.blhx （未测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （未测试）
-- **国服 (CN)**: com.bilibili.azurlane （构建正常，功能似乎异常？MuMu模拟器未闪退，皮肤功能失效，其余功能未测试）
+- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用；Bug：倍攻对敌人也生效，激情互秒了属于是）
 
 ## 重要说明
 - 脚本会自动从 APKPure 下载最新的基础 APK 文件，对于国服，只会从固定的链接下载 APK 文件
@@ -27,8 +27,7 @@
 3.  从草稿版本发布Releases中下载构建好的 APK 文件。
 
 ## 预览
-<img width="1635" height="969" alt="d031d6128e7efde74252d5486f9b99ee" src="https://github.com/user-attachments/assets/45f6deb9-b9e7-41c3-9155-bc13a9e22d97" />
-<img width="1635" height="969" alt="19453812-6fb6-4207-99fc-ce033fda3b79" src="https://github.com/user-attachments/assets/0e6f96d2-6027-4a70-9147-36b4d371e7cd" />
+<img width="1633" height="919" alt="472a1cb6-48e9-4366-8df3-13ac0c2358dc" src="https://github.com/user-attachments/assets/3797812c-a3a7-42c1-a1af-17a464c6daf8" />
 
 ## 参考内容以及仓库
 1. https://github.com/Egoistically/Perseus
