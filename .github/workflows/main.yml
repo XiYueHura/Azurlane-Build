@@ -71,18 +71,18 @@ jobs:
         shell: bash
 
       # 步骤6：构建 APK 文件
-      - name: Build Perseus APK
+      - name: Build JMBQ APK
         run: ./patch_perseus.sh ${{ env.BUNDLE_ID }}
 
       # 步骤7：对 APK 进行 zipalign 和签名
-      - name: Zipalign and Sign Android release
+      - name: Sign Android release
         run: ./zipalign_sign.sh
 
       # 步骤8：分卷压缩 APK
       - name: Create split archives
         run: |  
           # 删除之前可能遗留的分卷压缩包文件
-          rm -f "Azurlane Perseus.7z"*
+          rm -f "Azurlane JMBQ.7z"*
           
           # 查找生成的 APK 文件，使用 find 命令可以确保即使文件名有变化也能找到
           APK_FILE=$(find build -name "*.apk" -print -quit)
@@ -94,10 +94,10 @@ jobs:
           
           echo "Creating split archives for: $APK_FILE"
 
-          7z a -v800M "Azurlane Perseus.7z" "$APK_FILE"
+          7z a -v800M "Azurlane JMBQ.7z" "$APK_FILE"
           
           echo "Generated split files:"
-          ls -lh "Azurlane Perseus.7z"*
+          ls -lh "Azurlane JMBQ.7z"*
 
       # 步骤9：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
@@ -106,8 +106,8 @@ jobs:
           # 使用 `tag` 参数定义 Release 的标签
           tag: "${{ github.event.inputs.region }}-v${{ env.PERSEUS_VERSION }}"
           # 使用 `name` 参数定义 Release 的名称
-          name: "Azurlane Perseus ${{ github.event.inputs.region }} Release v${{ env.PERSEUS_VERSION }}"
+          name: "Azurlane JMBQ ${{ github.event.inputs.region }} Release v${{ env.PERSEUS_VERSION }}"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "Azurlane Perseus.7z.*"
+          artifacts: "Azurlane JMBQ.7z.*"
           # 允许更新已存在的 Release
           allowUpdates: true
