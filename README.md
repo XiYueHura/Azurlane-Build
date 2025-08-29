@@ -1,5 +1,7 @@
 # Azurlane JMBQ 一键构建
 
+<img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name" />
+
 **声明：本人小白，所以该仓库存在大量AI辅助修改的代码，存在很多问题，有些部分很抽象，欢迎各位大佬提出Issue改善**
 
 此仓库模板允许您使用 GitHub Actions 来构建 JMBQ客户端。这对于不想在自己机器上搭建构建环境或难以理解教程的人来说非常有用。
