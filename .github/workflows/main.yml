@@ -1,5 +1,5 @@
 # 工作流名称
-name: Perseus Build
+name: JMBQ Build
 
 # 触发器：使用手动触发，并定义输入参数 region
 on:
@@ -72,7 +72,7 @@ jobs:
 
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
-        run: ./patch_perseus.sh ${{ env.BUNDLE_ID }}
+        run: ./patch_jmbq.sh ${{ env.BUNDLE_ID }}
 
       # 步骤7：对 APK 进行 zipalign 和签名
       - name: Sign Android release
