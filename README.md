@@ -4,12 +4,13 @@
 
 此仓库模板允许您使用 GitHub Actions 来构建 Perseus。这对于不想在自己机器上搭建构建环境的人来说非常有用。
 
-## 碧蓝航线（Azur Lane）区域版本
-- **国际服 (EN)**: com.YoStarEN.AzurLane （未测试）
-- **日服 (JP)**: com.YoStarJP.AzurLane （未测试）
+## 支持的版本
+- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用；Bug：倍攻对敌人也生效，激情互秒了属于是）
+- **国际服 (EN)**: com.YoStarEN.AzurLane （构建正常，其余未测试）
+- **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试）
 - **韩服 (KR)**: kr.txwy.and.blhx （未测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （未测试）
-- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用；Bug：倍攻对敌人也生效，激情互秒了属于是）
+
 
 **其他服务器客户端在考虑支持中，B服已可在release中下载**
 
@@ -29,7 +30,10 @@
 3.  从草稿版本发布Releases中下载构建好的 APK 文件。
 
 ## 预览
+**B服**
 <img width="1633" height="919" alt="472a1cb6-48e9-4366-8df3-13ac0c2358dc" src="https://github.com/user-attachments/assets/3797812c-a3a7-42c1-a1af-17a464c6daf8" />
+**日服**
+<img width="1635" height="969" alt="QQ20250829-205032" src="https://github.com/user-attachments/assets/583c27c2-db2c-4e3c-9f27-42e3d9db1bd0" />
 
 ## 参考内容以及仓库
 1. https://github.com/Egoistically/Perseus
