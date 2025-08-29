@@ -144,11 +144,17 @@ patch_apk() {
 		exit 1
 	fi
 
-	# 2. 复制 smali_classes4/5
+	# 2. 复制 JMBQ smali 文件
 	echo "正在复制 JMBQ smali 文件..."
 	local SRC_DIR="JMBQ/smali_classes4"
 
-	# 查找最大的 smali_classes 目录编号
+	# 检查原始源目录是否存在
+	if [ ! -d "$SRC_DIR" ]; then
+		echo "错误: 源目录 $SRC_DIR 不存在！"
+		exit 1
+	fi
+
+	# 查找目标目录中最大的 smali_classes 目录编号
 	local MAX_CLASS_NUM=3
 	if [ -d "${bundle_id}/" ]; then
 		# 使用 find 查找所有 smali_classesX 目录，并提取最大的编号
@@ -159,17 +165,22 @@ patch_apk() {
 
 	# 计算新的 smali_classes 目录编号
 	local NEW_CLASS_NUM=$((MAX_CLASS_NUM + 1))
-	local NEW_SRC_DIR="JMBQ/smali_classes${NEW_CLASS_NUM}"
+	local NEW_SRC_PATH="JMBQ/smali_classes${NEW_CLASS_NUM}"
 
-	# 将 JMBQ/smali_classes4 重命名为新的目录名
-	mv "$SRC_DIR" "$NEW_SRC_DIR"
-	if [ $? -ne 0 ]; then
-		echo "错误: 移动 smali 文件失败！"
-		exit 1
+	# 只有当新的目录路径与旧的目录路径不同时，才执行重命名
+	if [ "$SRC_DIR" != "$NEW_SRC_PATH" ]; then
+		echo "正在将 $SRC_DIR 重命名为 $NEW_SRC_PATH"
+		mv "$SRC_DIR" "$NEW_SRC_PATH"
+		if [ $? -ne 0 ]; then
+			echo "错误: 移动 smali 文件失败！"
+			exit 1
+		fi
+	else
+		echo "新的目录名与原目录名相同，跳过重命名。"
 	fi
 
-	# 复制新的目录
-	cp -r "$NEW_SRC_DIR" "${bundle_id}/"
+	# 复制新的目录到目标位置
+	cp -r "$NEW_SRC_PATH" "${bundle_id}/"
 	if [ $? -ne 0 ]; then
 		echo "错误: 复制 smali 文件失败！"
 		exit 1
