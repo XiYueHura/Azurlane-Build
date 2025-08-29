@@ -8,10 +8,10 @@
 
 ## 支持的版本
 - **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用；Bug：倍攻对敌人也生效，激情互秒了属于是）
-- **国际服 (EN)**: com.YoStarEN.AzurLane （构建正常，其余未测试）
+- **国际服 (EN)**: com.YoStarEN.AzurLane （已构建，未测试）
 - **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试）
-- **韩服 (KR)**: kr.txwy.and.blhx （未测试）
-- **台服 (TW)**: com.hkmanjuu.azurlane.gp （未测试）
+- **韩服 (KR)**: kr.txwy.and.blhx （已构建，未测试）
+- **台服 (TW)**: com.hkmanjuu.azurlane.gp （已构建，未测试）
 
 
 **其他服务器客户端在考虑支持中，可在Release中查看已经构建的版本进行下载**
