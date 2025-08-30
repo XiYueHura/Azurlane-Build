@@ -7,7 +7,7 @@
 # 定义国服包名
 bundle_id="com.bilibili.azurlane"
 # 定义国服下载链接
-cn_download_url="https://d1.soft9567.com/android4/20240911/blhx.apk"
+cn_download_url="https://drive.usercontent.google.com/download?id=1sxmT8lpvaOKFJOEJkUgvO4fuddumZ-86&export=download&authuser=0&confirm=t&uuid=c2cfc942-a091-4b8d-86c1-12950316731e&at=AN8xHoraEZjmj0tusuERuzPYqZd7%3A1756520247271"
 
 # ==============================================================================
 # 函数定义
