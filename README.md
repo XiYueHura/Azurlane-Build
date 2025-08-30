@@ -23,11 +23,6 @@
 - **在任何情况下**，都不会有任何 APK 文件被上传到此仓库，以避免 DMCA（数字千年版权法）侵权问题。
 - 如果您想参与贡献，请先 Fork 本仓库。
 
-## 如何自行构建
-1.  进入 Actions -> All workflows -> JMBQ Build。
-2.  选择您想要构建的区域版本，并运行工作流。
-3.  从Releases中下载构建好的分卷压缩文件。
-
 ## 预览
 **B服**
 <img width="1633" height="919" alt="472a1cb6-48e9-4366-8df3-13ac0c2358dc" src="https://github.com/user-attachments/assets/3797812c-a3a7-42c1-a1af-17a464c6daf8" />
@@ -35,8 +30,5 @@
 <img width="1635" height="969" alt="QQ20250829-205032" src="https://github.com/user-attachments/assets/583c27c2-db2c-4e3c-9f27-42e3d9db1bd0" />
 
 ## 参考内容以及仓库
-1. https://github.com/Egoistically/Perseus
-2. https://github.com/JMBQ/azurlane
-3. https://github.com/n0k0m3/PerseusCI
-4. https://github.com/feathers-l/AzurLaneBiliBili-Fix
-5. https://github.com/feathers-l/azurlane
+1. https://github.com/JMBQ/azurlane
+2. https://github.com/n0k0m3/PerseusCI
