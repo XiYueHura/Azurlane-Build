@@ -48,7 +48,7 @@ jobs:
       - name: Create split archives
         run: |  
           # 删除之前可能遗留的分卷压缩包文件
-          rm -f "Azurlane Tianwu.7z"*
+          rm -f "Azurlane Tianwu Bilibili.7z"*
           
           # 查找生成的 APK 文件，使用 find 命令可以确保即使文件名有变化也能找到
           APK_FILE=$(find build -name "*.apk" -print -quit)
@@ -60,17 +60,17 @@ jobs:
           
           echo "Creating split archives for: $APK_FILE"
 
-          7z a -v800M "Azurlane Tianwu.7z" "$APK_FILE"
+          7z a -v800M "Azurlane Tianwu Bilibili.7z" "$APK_FILE"
           
           echo "Generated split files:"
-          ls -lh "Azurlane Tianwu.7z"*
+          ls -lh "Azurlane Tianwu Bilibili.7z"*
 
       # 步骤8：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
           # 使用 `tag` 参数定义 Release 的标签
-          tag: "Bilibili-v9.6.11 test"
+          tag: "Bilibili-v9.6.11-test"
           # 使用 `name` 参数定义 Release 的名称
           name: "Azurlane Tianwu Bilibili Release v9.6.11 test"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
