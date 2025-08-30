@@ -156,7 +156,6 @@ patch_apk() {
 	echo "资源文件复制成功！"
 
 	# 3. 修改 UnityPlayerActivity.smali
-	echo "正在修改 UnityPlayerActivity.smali 文件..."
 	# 在指定目录下自动查找 UnityPlayerActivity.smali 文件
 	local SMALI_FILE=$(find "${bundle_id}" -type f -name "UnityPlayerActivity.smali")
 	# 检查是否找到了文件
@@ -171,6 +170,7 @@ patch_apk() {
 		echo "错误: <oncreate> 方法未找到！"
 		exit 1
 	fi
+	echo "正在修改 UnityPlayerActivity.smali 文件..."
 
 	sed -ir "N; s#\($oncreate\n    .locals 2\)#\1\n    invoke-static {p0}, Lcom/android/support/Main;->Start(Landroid/content/Context;)V#" "$SMALI_FILE"
 
