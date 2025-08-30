@@ -102,7 +102,7 @@ jobs:
       - name: Install build-tools
         run: |
           yes | sdkmanager --install "build-tools;35.0.0"
-
+      
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
         run: |
@@ -143,7 +143,16 @@ jobs:
           echo "Generated split files:"
           ls -lh "${{ env.BUNDLE }} JMBQ.7z"*
 
-      # 步骤8：创建 Release 并上传所有分卷文件
+      # 步骤8：获取北京时间
+      - name: Set Beijing time
+        id: time_setter
+        run: |
+          # 获取北京时间 (UTC+8)
+          BEIJING_TIME=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
+          echo "BUILD_TIME=$BEIJING_TIME" >> $GITHUB_ENV
+          echo "构建时间（北京时间）: $BEIJING_TIME"
+
+      # 步骤9：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
@@ -160,7 +169,7 @@ jobs:
             区服: ${{ env.REGION }}
             包名: ${{ env.BUNDLE }}
             版本: ${{ env.VERSION }}
-            构建日期: ${{ github.event.repository.updated_at }}
+            构建日期: ${{ env.BUILD_TIME }}
             
             **安装说明:**
             1. 下载所有以 7z.00* 结尾的文件（有些时候有多个，有些时候只有一个，依据客户端大小决定）
