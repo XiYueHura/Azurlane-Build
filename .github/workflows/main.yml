@@ -41,24 +41,8 @@ jobs:
       # 步骤1：检出仓库代码
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      # 步骤2：设置 Java JDK
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.3.0
-        with:
-          java-version: "17"
-          distribution: "adopt"
 
-      # 步骤3：设置 Android SDK
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      # 步骤4：安装 build-tools
-      - name: Install build-tools
-        run: |
-          yes | sdkmanager --install "build-tools;35.0.0"
-
-      # 步骤5：确定 Bundle ID 和下载链接
+      # 步骤2：确定 Bundle ID 和下载链接
       - name: Determine Bundle ID and Download URL
         id: bundle_config
         run: |
@@ -102,6 +86,22 @@ jobs:
           esac
           echo "REGION=${{ github.event.inputs.region }}" >> $GITHUB_ENV
         shell: bash
+      
+      # 步骤3：设置 Java JDK
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.3.0
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      # 步骤4：设置 Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # 步骤5：安装 build-tools
+      - name: Install build-tools
+        run: |
+          yes | sdkmanager --install "build-tools;35.0.0"
 
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
