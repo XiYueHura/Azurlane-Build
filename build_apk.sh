@@ -338,10 +338,6 @@ optimize_and_sign_apk() {
 			echo "正在为 $f 签名"
 			if apksigner sign --key "$PRIVATE_KEY" --cert "$CERTIFICATE" "$f"; then
 				echo "签名成功"
-
-				# 验证签名
-				echo "验证签名..."
-				apksigner verify --verbose "$f"
 			else
 				echo "签名失败"
 				exit 1
