@@ -10,7 +10,7 @@
 - **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用）
 - **国际服 (EN)**: com.YoStarEN.AzurLane （已构建，未测试）
 - **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试）
-- **韩服 (KR)**: kr.txwy.and.blhx （已构建，未测试）
+- **韩服 (KR)**: kr.txwy.and.blhx （已构建，运行异常，点开后没有任何反应，原因未知）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （已构建，未测试）
 
 可能存在的Bug：请参考[Issue](https://github.com/JMBQ/azurlane/issues)
