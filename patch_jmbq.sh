@@ -51,7 +51,7 @@ download_azurlane() {
 	if [ ! -f "${bundle_id}.apk" ]; then
 		echo "正在获取《Azur Lane》APK，包名：${bundle_id}"
 		if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
-			echo "正在从固定链接下载国服（CN）版 APK..."
+			echo "正在从固定链接下载国服（${bundle_id}） APK..."
 			curl -L "$cn_download_url" -o "${bundle_id}.apk"
 			if [ $? -ne 0 ]; then
 				echo "错误: 下载国服 APK 失败！"
@@ -59,7 +59,7 @@ download_azurlane() {
 			fi
 			echo "国服 APK 下载成功！"
 		else
-			echo "正在使用 apkeep 下载其他版本（XAPK 格式）..."
+			echo "正在使用 apkeep 下载（XAPK 格式）..."
 			./apkeep -a "$bundle_id" .
 			if [ $? -ne 0 ]; then
 				echo "错误: 下载 XAPK 失败！"
@@ -126,6 +126,12 @@ verify_and_decompile_apk() {
 		exit 1
 	fi
 	echo "反编译完成。"
+
+	# 检查 JMBQ 目录是否存在
+	if [ ! -d "JMBQ" ]; then
+    	echo "错误: JMBQ 目录不存在！"
+    	exit 1
+	fi
 }
 
 # 打补丁核心逻辑
@@ -189,23 +195,27 @@ patch_apk() {
 	echo "成功复制 JMBQ smali 文件到 ${bundle_id}/smali_classes${NEW_CLASS_NUM}/"
 
 	# 3. 修改 CoreComponentFactory.smali
-	echo "正在修改 CoreComponentFactory.smali 文件..."
-	local SMALI_FILE="${bundle_id}/smali/androidx/core/app/CoreComponentFactory.smali"
-	if [ ! -f "$SMALI_FILE" ]; then
+	# 在指定目录下自动查找 CoreComponentFactory.smali 文件
+	local SMALI_FILE=$(find "${bundle_id}" -type f -name "CoreComponentFactory.smali")
+	# 检查是否找到了文件
+	if [ -z "$SMALI_FILE" ]; then
 		echo "错误: CoreComponentFactory.smali 文件未找到！"
 		exit 1
 	fi
+	echo "已找到 CoreComponentFactory.smali 文件，路径为: $SMALI_FILE"
+
 	local oninit=$(grep -n -m 1 '.method public constructor <init>()V' "$SMALI_FILE" | sed 's/[0-9]*\:\(.*\)/\1/')
 	if [ -z "$oninit" ]; then
 		echo "错误: <init> 方法未找到！"
 		exit 1
 	fi
 	sed -i "N; s#\($oninit\n    .locals 0\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
+	echo "正在修改 CoreComponentFactory.smali 文件..."
 
 	# 4. 修改 AndroidManifest.xml
 	echo "正在修改 AndroidManifest.xml 文件..."
 	sed -i 's#</application>#    <service android:name="com.android.support.Launcher" android:enabled="true" android:exported="false" android:stopWithTask="true"/>\n    </application>\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>#' "${bundle_id}/AndroidManifest.xml"
-	echo "打补丁完成。"
+	echo "补丁完成。"
 }
 
 # 构建最终的 APK 文件
