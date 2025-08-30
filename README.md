@@ -26,6 +26,8 @@
 ## 预览
 **B服**
 <img width="1633" height="919" alt="472a1cb6-48e9-4366-8df3-13ac0c2358dc" src="https://github.com/user-attachments/assets/3797812c-a3a7-42c1-a1af-17a464c6daf8" />
+<img width="1635" height="969" alt="{75C6C3EE-5474-488D-BDE6-62138933B16E}" src="https://github.com/user-attachments/assets/581eb9dc-f2da-4175-bd43-4de2353c5dcb" />
+
 **日服**
 <img width="1635" height="969" alt="QQ20250829-205032" src="https://github.com/user-attachments/assets/583c27c2-db2c-4e3c-9f27-42e3d9db1bd0" />
 
