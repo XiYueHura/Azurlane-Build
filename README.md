@@ -7,12 +7,13 @@
 此仓库模板允许您使用 GitHub Actions 来构建 JMBQ客户端。这对于不想在自己机器上搭建构建环境或难以理解教程的人来说非常有用。
 
 ## 支持的版本
-- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用；Bug：倍攻对敌人也生效，激情互秒了属于是）
+- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用）
 - **国际服 (EN)**: com.YoStarEN.AzurLane （已构建，未测试）
 - **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试）
 - **韩服 (KR)**: kr.txwy.and.blhx （已构建，未测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （已构建，未测试）
 
+可能存在的Bug：请参考[Issue](https://github.com/JMBQ/azurlane/issues)
 
 **其他服务器客户端在火热支持中，如有需要请提供安装包链接，可在Release中查看已经构建的版本进行下载**
 
