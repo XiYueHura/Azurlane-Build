@@ -6,12 +6,44 @@
 
 # 检查是否提供了 bundle id
 if [ -z "$1" ]; then
-	echo "错误：未提供包名。用法: ./patch_perseus.sh com.bundle.id"
+	echo "错误：未提供包名"
 	exit 1
 fi
 
 bundle_id=$1
-cn_download_url="https://drive.usercontent.google.com/download?id=1_K7EOoq3Ku3JS63PQpeAv2-t6P-4WhTh&export=download&confirm=t&uuid=f3132d29-4529-4e99-a779-bb5c977849e1&at=AN8xHoqpgPXiw9DWtc24IjYgswtd%3A1756390813525"
+
+# 国服Bilibili配置
+cn_download_url=""
+
+# 其他版本的配置
+other_bundle_id=""
+other_download_url=""
+
+# 如果bundle_id为"com.bilibili.azurlane"，则使用Bilibili版本的配置
+if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
+	if [ -z "$2" ]; then
+		echo "错误：当使用'CN'时，需要提供下载链接"
+		exit 1
+	fi
+	
+	cn_download_url=$2
+	echo "使用国服Bilibili版本配置: 包名=$bundle_id, 下载链接=$cn_download_url"
+
+# 如果bundle_id为"other"，则使用其他版本的配置
+elif [ "$bundle_id" = "other" ]; then
+	if [ -z "$2" ]; then
+		echo "错误：当使用'other'时，需要提供实际的包名或者名称"
+		exit 1
+	fi
+	if [ -z "$3" ]; then
+		echo "错误：当使用'other'时，需要提供下载链接"
+		exit 1
+	fi
+	
+	other_bundle_id=$2
+	other_download_url=$3
+	echo "使用其他版本配置: 包名=$other_bundle_id, 下载链接=$other_download_url"
+fi
 
 # ==============================================================================
 # 函数定义
@@ -46,21 +78,46 @@ download_dependencies() {
 	echo "所有依赖项已就绪。"
 }
 
+# 获取实际使用的包名
+get_actual_bundle_id() {
+	if [ "$bundle_id" = "other" ]; then
+		echo "$other_bundle_id"
+	else
+		echo "$bundle_id"
+	fi
+}
+
 # 下载《Azur Lane》APK/XAPK 文件
 download_azurlane() {
-	if [ ! -f "${bundle_id}.apk" ]; then
-		echo "正在获取《Azur Lane》APK，包名：${bundle_id}"
+	local actual_bundle_id=$(get_actual_bundle_id)
+	local target_file="${actual_bundle_id}.apk"
+	
+	if [ ! -f "$target_file" ]; then
+		echo "正在获取《Azur Lane》APK，包名：${actual_bundle_id}"
+		
+		# 处理不同版本
+		# Bilibili
 		if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
-			echo "正在从固定链接下载国服（${bundle_id}） APK..."
-			curl -L "$cn_download_url" -o "${bundle_id}.apk"
+			echo "正在从固定链接下载国服（${actual_bundle_id}） APK..."
+			curl -L "$cn_download_url" -o "$target_file"
 			if [ $? -ne 0 ]; then
 				echo "错误: 下载国服 APK 失败！"
 				exit 1
 			fi
 			echo "国服 APK 下载成功！"
+		# 其他服务器
+		elif [ "$bundle_id" = "other" ]; then
+			echo "正在从自定义链接下载其他版本（${actual_bundle_id}） APK..."
+			curl -L "$other_download_url" -o "$target_file"
+			if [ $? -ne 0 ]; then
+				echo "错误: 下载其他版本 APK 失败！"
+				exit 1
+			fi
+			echo "其他版本 APK 下载成功！"
+		# 外服
 		else
 			echo "正在使用 apkeep 下载（XAPK 格式）..."
-			./apkeep -a "$bundle_id" .
+			./apkeep -a "$actual_bundle_id" .
 			if [ $? -ne 0 ]; then
 				echo "错误: 下载 XAPK 失败！"
 				exit 1
@@ -69,14 +126,14 @@ download_azurlane() {
 
 			# 提取 APK 和 manifest.json
 			echo "正在从 XAPK 中提取 APK 文件..."
-			unzip -o "${bundle_id}.xapk" "${bundle_id}.apk"
+			unzip -o "${actual_bundle_id}.xapk" "${actual_bundle_id}.apk"
 			if [ $? -ne 0 ]; then
 				echo "错误: 提取 APK 失败！"
 				exit 1
 			fi
 
 			mkdir -p "AzurLane"
-			unzip -o "${bundle_id}.xapk" "manifest.json" -d "AzurLane/"
+			unzip -o "${actual_bundle_id}.xapk" "manifest.json" -d "AzurLane/"
 			echo "APK 和 manifest.json 提取成功！"
 		fi
 	fi
@@ -109,9 +166,12 @@ download_jmbq_patch() {
 
 # 验证 APK 文件完整性并执行解包
 verify_and_decompile_apk() {
+	local actual_bundle_id=$(get_actual_bundle_id)
+	local apk_file="${actual_bundle_id}.apk"
+	
 	# 验证 APK 文件完整性
 	echo "正在验证 APK 文件完整性..."
-	if ! unzip -t "${bundle_id}.apk" >/dev/null 2>&1; then
+	if ! unzip -t "$apk_file" >/dev/null 2>&1; then
 		echo "错误: APK 文件已损坏或无效！"
 		echo "请检查下载源并重试。"
 		exit 1
@@ -120,7 +180,7 @@ verify_and_decompile_apk() {
 
 	# 执行 APK 解包
 	echo "正在对《Azur Lane》进行反编译..."
-	java -jar apktool.jar d -f "${bundle_id}.apk"
+	java -jar apktool.jar d -f "$apk_file"
 	if [ $? -ne 0 ]; then
 		echo "错误: APK 反编译失败！"
 		exit 1
@@ -136,15 +196,17 @@ verify_and_decompile_apk() {
 
 # 打补丁核心逻辑
 patch_apk() {
-	echo "正在对《Azur Lane》进行打补丁..."
+	local actual_bundle_id=$(get_actual_bundle_id)
+	
+	echo "正在对《Azur Lane》进行补丁操作..."
 
 	# 1. 复制 JMBQ lib 文件
 	echo "正在复制 JMBQ 库文件..."
-	if [ ! -d "${bundle_id}/lib/" ]; then
-		echo "错误: 目标目录 ${bundle_id}/lib/ 不存在！"
+	if [ ! -d "${actual_bundle_id}/lib/" ]; then
+		echo "错误: 目标目录 ${actual_bundle_id}/lib/ 不存在！"
 		exit 1
 	fi
-	cp -r JMBQ/lib/. "${bundle_id}/lib/"
+	cp -r JMBQ/lib/. "${actual_bundle_id}/lib/"
 	if [ $? -ne 0 ]; then
 		echo "错误: 复制库文件失败！"
 		exit 1
@@ -162,9 +224,9 @@ patch_apk() {
 
 	# 查找目标目录中最大的 smali_classes 目录编号
 	local MAX_CLASS_NUM=3
-	if [ -d "${bundle_id}/" ]; then
+	if [ -d "${actual_bundle_id}/" ]; then
 		# 使用 find 查找所有 smali_classesX 目录，并提取最大的编号
-		MAX_CLASS_NUM=$(find "${bundle_id}/" -maxdepth 1 -type d -name "smali_classes*" | sed 's/.*smali_classes//' | sort -n | tail -1)
+		MAX_CLASS_NUM=$(find "${actual_bundle_id}/" -maxdepth 1 -type d -name "smali_classes*" | sed 's/.*smali_classes//' | sort -n | tail -1)
 		# 如果没有找到，将编号重置为 3
 		[ -z "$MAX_CLASS_NUM" ] && MAX_CLASS_NUM=3
 	fi
@@ -186,17 +248,17 @@ patch_apk() {
 	fi
 
 	# 复制新的目录到目标位置
-	cp -r "$NEW_SRC_PATH" "${bundle_id}/"
+	cp -r "$NEW_SRC_PATH" "${actual_bundle_id}/"
 	if [ $? -ne 0 ]; then
 		echo "错误: 复制 smali 文件失败！"
 		exit 1
 	fi
 
-	echo "成功复制 JMBQ smali 文件到 ${bundle_id}/smali_classes${NEW_CLASS_NUM}/"
+	echo "成功复制 JMBQ smali 文件到 ${actual_bundle_id}/smali_classes${NEW_CLASS_NUM}/"
 
 	# 3. 修改 CoreComponentFactory.smali
 	# 在指定目录下自动查找 CoreComponentFactory.smali 文件
-	local SMALI_FILE=$(find "${bundle_id}" -type f -name "CoreComponentFactory.smali")
+	local SMALI_FILE=$(find "${actual_bundle_id}" -type f -name "CoreComponentFactory.smali")
 	# 检查是否找到了文件
 	if [ -z "$SMALI_FILE" ]; then
 		echo "错误: CoreComponentFactory.smali 文件未找到！"
@@ -214,28 +276,104 @@ patch_apk() {
 
 	# 4. 修改 AndroidManifest.xml
 	echo "正在修改 AndroidManifest.xml 文件..."
-	sed -i 's#</application>#    <service android:name="com.android.support.Launcher" android:enabled="true" android:exported="false" android:stopWithTask="true"/>\n    </application>\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>#' "${bundle_id}/AndroidManifest.xml"
+	sed -i 's#</application>#    <service android:name="com.android.support.Launcher" android:enabled="true" android:exported="false" android:stopWithTask="true"/>\n    </application>\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>#' "${actual_bundle_id}/AndroidManifest.xml"
 	echo "补丁完成。"
 }
 
 # 构建最终的 APK 文件
 build_apk() {
+	local actual_bundle_id=$(get_actual_bundle_id)
+	
 	echo "正在重新构建已打补丁的 APK 文件..."
 	mkdir -p build
-	java -jar apktool.jar b -f "$bundle_id" -o "build/${bundle_id}.patched.apk"
+	java -jar apktool.jar b -f "$actual_bundle_id" -o "build/${actual_bundle_id}.patched.apk"
 	if [ $? -ne 0 ]; then
 		echo "错误: APK 构建失败！"
 		exit 1
 	fi
-	echo "APK 构建成功：build/${bundle_id}.patched.apk"
+	echo "APK 构建成功：build/${actual_bundle_id}.patched.apk"
+}
+
+# 优化APK并签名
+optimize_and_sign_apk() {
+	# 自动检测最新版本的 build-tools
+	local BUILD_TOOLS_DIR=$(find $ANDROID_HOME/build-tools -maxdepth 1 -type d | sort -V | tail -n 1)
+	local PATH=$PATH:$BUILD_TOOLS_DIR
+
+	# 密钥路径
+	local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	local KEY_DIR="${SCRIPT_DIR}/key/"
+	local PRIVATE_KEY="${KEY_DIR}testkey.pk8"
+	local CERTIFICATE="${KEY_DIR}testkey.x509.pem"
+
+	# 检查密钥文件是否存在
+	if [ ! -f "$PRIVATE_KEY" ] || [ ! -f "$CERTIFICATE" ]; then
+		echo "错误：找不到签名密钥文件"
+		echo "请确保以下文件存在："
+		echo "  - $PRIVATE_KEY"
+		echo "  - $CERTIFICATE"
+		exit 1
+	fi
+
+	# 处理 APK 文件
+	for f in build/*.apk; do
+		if [ ! -f "$f" ]; then
+			echo "未找到 APK 文件"
+			continue
+		fi
+		
+		echo "正在处理: $f"
+		
+		# 创建临时文件
+		local UNSIGNED_APK="${f%.apk}.unsigned.apk"
+		
+		# 复制文件而不是移动，避免原文件丢失
+		cp "$f" "$UNSIGNED_APK"
+		
+		echo "正在优化: $f"
+		if zipalign -f 4 "$UNSIGNED_APK" "$f"; then
+			echo "优化成功"
+			rm "$UNSIGNED_APK"
+			
+			echo "正在为 $f 签名"
+			if apksigner sign --key "$PRIVATE_KEY" --cert "$CERTIFICATE" "$f"; then
+				echo "签名成功"
+				
+				# 验证签名
+				echo "验证签名..."
+				apksigner verify --verbose "$f"
+			else
+				echo "签名失败"
+				exit 1
+			fi
+		else
+			echo "优化失败"
+			rm "$UNSIGNED_APK"
+			exit 1
+		fi
+	done
+
+	echo "所有 APK 处理完成"
 }
 
 # 设置 GitHub Actions 的版本环境变量
 set_github_version() {
 	echo "正在设置版本环境变量..."
 	local version
-	if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
-		version="9.6.11"
+	local actual_bundle_id=$(get_actual_bundle_id)
+	
+	if [ "$bundle_id" = "com.bilibili.azurlane" ] || [ "$bundle_id" = "other" ]; then
+		# 对于国服和其他版本，尝试从APK中提取版本信息
+		if [ -f "${actual_bundle_id}.apk" ]; then
+			# 使用aapt工具获取版本信息
+			if command -v aapt >/dev/null 2>&1; then
+				version=$(aapt dump badging "${actual_bundle_id}.apk" | grep "versionName" | sed "s/.*versionName='\([^']*\)'.*/\1/")
+			else
+				version="未知（需要aapt工具）"
+			fi
+		else
+			version="未知"
+		fi
 	else
 		if [ -f "AzurLane/manifest.json" ]; then
 			version=$(jq -r '.version_name' AzurLane/manifest.json)
@@ -258,6 +396,7 @@ download_jmbq_patch
 verify_and_decompile_apk
 patch_apk
 build_apk
+optimize_and_sign_apk
 set_github_version
 
 echo "补丁流程执行完毕！"

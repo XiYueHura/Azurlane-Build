@@ -1,7 +1,2 @@
-.vscode
-AzurLane
-com.YoStarEN.AzurLane*
-Perseus
-apkeep
-apktool.jar
+*.apk
 *.keystore

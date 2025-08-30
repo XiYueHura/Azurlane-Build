@@ -1,12 +1,12 @@
 # 工作流名称
 name: JMBQ Build
 
-# 触发器：使用手动触发，并定义输入参数 region
+# 触发器：使用手动触发，并定义输入参数
 on:
   workflow_dispatch:
     inputs:
       region:
-        description: 'Select Region'
+        description: '选择区服'
         required: true
         type: choice
         options:
@@ -15,6 +15,17 @@ on:
           - 'KR'
           - 'TW'
           - 'CN'
+          - 'OTHER'
+      other_bundle_id:
+        description: '区服名称或者包名（请填入全英文，且不包含空格，例如 百度服 请填入 baidu 即可）'
+        required: false
+        type: string
+        default: ''
+      other_download_url:
+        description: 'APK下载链接，务必填入直链，最好使用国外云盘的直链，例如Google云盘'
+        required: false
+        type: string
+        default: ''
 
 # 定义一个任务（Job）
 jobs:
@@ -45,11 +56,11 @@ jobs:
       # 步骤4：安装 build-tools
       - name: Install build-tools
         run: |
-          yes | sdkmanager --install "build-tools;32.0.0"
+          yes | sdkmanager --install "build-tools;35.0.0"
 
-      # 步骤5：确定 Bundle ID
-      - name: Determine Bundle ID
-        id: bundle_id
+      # 步骤5：确定 Bundle ID 和下载链接
+      - name: Determine Bundle ID and Download URL
+        id: bundle_config
         run: |
           case "${{ github.event.inputs.region }}" in
           "EN")
@@ -65,14 +76,43 @@ jobs:
             echo "BUNDLE_ID=com.hkmanjuu.azurlane.gp" >> $GITHUB_ENV
             ;;
           "CN")
+          if [ -z "${{ github.event.inputs.other_download_url }}" ]; then
+              echo "错误：在区服选择CN时需手动填入APK下载地址,链接必须为直链！"
+              exit 1
+            fi
+
             echo "BUNDLE_ID=com.bilibili.azurlane" >> $GITHUB_ENV
+            echo "DOWNLOAD_URL=${{ github.event.inputs.other_download_url }}" >> $GITHUB_ENV
+            ;;
+          "OTHER")
+            # 验证输入参数
+            if [ -z "${{ github.event.inputs.other_bundle_id }}" ]; then
+              echo "错误：在区服选择other时需手动填入包名或易于分辨的英文名称！"
+              exit 1
+            fi
+            if [ -z "${{ github.event.inputs.other_download_url }}" ]; then
+              echo "错误：在区服选择other时需手动填入APK下载地址,链接必须为直链！"
+              exit 1
+            fi
+            
+            echo "BUNDLE_ID=other" >> $GITHUB_ENV
+            echo "ACTUAL_BUNDLE_ID=${{ github.event.inputs.other_bundle_id }}" >> $GITHUB_ENV
+            echo "DOWNLOAD_URL=${{ github.event.inputs.other_download_url }}" >> $GITHUB_ENV
             ;;
           esac
+          echo "REGION=${{ github.event.inputs.region }}" >> $GITHUB_ENV
         shell: bash
 
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
-        run: ./patch_jmbq.sh ${{ env.BUNDLE_ID }}
+        run: |
+          if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
+            ./build_apk.sh other "${{ env.ACTUAL_BUNDLE_ID }}" "${{ env.DOWNLOAD_URL }}"
+          elif [ "${{ env.BUNDLE_ID }}" = "com.bilibili.azurlane" ]; then
+            ./build_apk.sh "${{ env.BUNDLE_ID }}" "${{ env.DOWNLOAD_URL }}"
+          else
+            ./build_apk.sh "${{ env.BUNDLE_ID }}"
+          fi
 
       # 步骤7：对 APK 进行 zipalign 和签名
       - name: Sign Android release
@@ -82,32 +122,55 @@ jobs:
       - name: Create split archives
         run: |  
           # 删除之前可能遗留的分卷压缩包文件
-          rm -f "${{ env.BUNDLE_ID }} JMBQ.7z"*
+          rm -f "${{ env.REGION }} JMBQ.7z"*
           
-          # 查找生成的 APK 文件，使用 find 命令可以确保即使文件名有变化也能找到
-          APK_FILE=$(find build -name "*.apk" -print -quit)
+          # 查找生成的 APK 文件
+          if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
+            ACTUAL_ID="${{ env.ACTUAL_BUNDLE_ID }}"
+          else
+            ACTUAL_ID="${{ env.BUNDLE_ID }}"
+          fi
+          
+          APK_FILE=$(find build -name "${ACTUAL_ID}*.apk" -print -quit)
           
           if [ -z "$APK_FILE" ]; then
             echo "Error: No APK file found in build directory!"
-            exit 1
+            # 尝试查找任何APK文件
+            APK_FILE=$(find build -name "*.apk" -print -quit)
+            if [ -z "$APK_FILE" ]; then
+              exit 1
+            fi
+            echo "Found APK file: $APK_FILE"
           fi
           
           echo "Creating split archives for: $APK_FILE"
 
-          7z a -v800M "${{ env.BUNDLE_ID }} JMBQ.7z" "$APK_FILE"
+          7z a -v800M "${{ env.REGION }} JMBQ.7z" "$APK_FILE"
           
           echo "Generated split files:"
-          ls -lh "${{ env.BUNDLE_ID }} JMBQ.7z"*
+          ls -lh "${{ env.REGION }} JMBQ.7z"*
 
       # 步骤9：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
           # 使用 `tag` 参数定义 Release 的标签
-          tag: "${{ github.event.inputs.region }}-v${{ env.PERSEUS_VERSION }}"
+          tag: "${{ env.REGION }}-v${{ env.PERSEUS_VERSION }}"
           # 使用 `name` 参数定义 Release 的名称
-          name: "${{ env.BUNDLE_ID }} JMBQ Release v${{ env.PERSEUS_VERSION }}"
+          name: "${{ env.REGION }} JMBQ Release v${{ env.PERSEUS_VERSION }}"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "${{ env.BUNDLE_ID }} JMBQ.7z.*"
+          artifacts: "${{ env.REGION }} JMBQ.7z.*"
           # 允许更新已存在的 Release
           allowUpdates: true
+          # 添加 Release 说明
+          body: |
+            Region: ${{ env.REGION }}
+            Bundle ID: ${{ env.BUNDLE_ID }}
+            Actual Bundle ID: ${{ env.ACTUAL_BUNDLE_ID || 'N/A' }}
+            Version: ${{ env.PERSEUS_VERSION }}
+            Build Date: ${{ github.event.repository.updated_at }}
+            
+            **Instructions:**
+            1. Download all .7z parts
+            2. Extract using: `7z x "${{ env.REGION }} JMBQ.7z.001"`
+            3. Install the APK file
