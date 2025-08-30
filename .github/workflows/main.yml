@@ -114,16 +114,9 @@ jobs:
             ./build_apk.sh "${{ env.BUNDLE_ID }}"
           fi
 
-      # 步骤7：对 APK 进行 zipalign 和签名
-      - name: Sign Android release
-        run: ./zipalign_sign.sh
-
-      # 步骤8：分卷压缩 APK
+      # 步骤7：分卷压缩 APK
       - name: Create split archives
-        run: |  
-          # 删除之前可能遗留的分卷压缩包文件
-          rm -f "${{ env.REGION }} JMBQ.7z"*
-          
+        run: |
           # 查找生成的 APK 文件
           if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
             ACTUAL_ID="${{ env.ACTUAL_BUNDLE_ID }}"
@@ -145,32 +138,31 @@ jobs:
           
           echo "Creating split archives for: $APK_FILE"
 
-          7z a -v800M "${{ env.REGION }} JMBQ.7z" "$APK_FILE"
+          7z a -v800M "${{ env.BUNDLE }} JMBQ.7z" "$APK_FILE"
           
           echo "Generated split files:"
-          ls -lh "${{ env.REGION }} JMBQ.7z"*
+          ls -lh "${{ env.BUNDLE }} JMBQ.7z"*
 
-      # 步骤9：创建 Release 并上传所有分卷文件
+      # 步骤8：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
           # 使用 `tag` 参数定义 Release 的标签
-          tag: "${{ env.REGION }}-v${{ env.PERSEUS_VERSION }}"
+          tag: "${{ env.REGION }}-v${{ env.VERSION }}"
           # 使用 `name` 参数定义 Release 的名称
-          name: "${{ env.REGION }} JMBQ Release v${{ env.PERSEUS_VERSION }}"
+          name: "${{ env.BUNDLE }} JMBQ Release v${{ env.VERSION }}"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "${{ env.REGION }} JMBQ.7z.*"
+          artifacts: "${{ env.BUNDLE }} JMBQ.7z.*"
           # 允许更新已存在的 Release
           allowUpdates: true
           # 添加 Release 说明
           body: |
-            Region: ${{ env.REGION }}
-            Bundle ID: ${{ env.BUNDLE_ID }}
-            Actual Bundle ID: ${{ env.ACTUAL_BUNDLE_ID || 'N/A' }}
-            Version: ${{ env.PERSEUS_VERSION }}
-            Build Date: ${{ github.event.repository.updated_at }}
+            区服: ${{ env.REGION }}
+            包名: ${{ env.BUNDLE }}
+            版本: ${{ env.VERSION }}
+            构建日期: ${{ github.event.repository.updated_at }}
             
-            **Instructions:**
-            1. Download all .7z parts
-            2. Extract using: `7z x "${{ env.REGION }} JMBQ.7z.001"`
-            3. Install the APK file
+            **安装说明:**
+            1. 下载所有以 7z.00* 结尾的文件（有些时候有多个，有些时候只有一个，依据客户端大小决定）
+            2. 解压时只需要选择"XXXXX JMBQ.7z.001"解压即可`
+            3. 在解压后的文件夹中找到apk文件并安装

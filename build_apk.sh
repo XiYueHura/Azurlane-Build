@@ -25,7 +25,7 @@ if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
 		echo "错误：当使用'CN'时，需要提供下载链接"
 		exit 1
 	fi
-	
+
 	cn_download_url=$2
 	echo "使用国服Bilibili版本配置: 包名=$bundle_id, 下载链接=$cn_download_url"
 
@@ -39,7 +39,7 @@ elif [ "$bundle_id" = "other" ]; then
 		echo "错误：当使用'other'时，需要提供下载链接"
 		exit 1
 	fi
-	
+
 	other_bundle_id=$2
 	other_download_url=$3
 	echo "使用其他版本配置: 包名=$other_bundle_id, 下载链接=$other_download_url"
@@ -91,10 +91,10 @@ get_actual_bundle_id() {
 download_azurlane() {
 	local actual_bundle_id=$(get_actual_bundle_id)
 	local target_file="${actual_bundle_id}.apk"
-	
+
 	if [ ! -f "$target_file" ]; then
 		echo "正在获取《Azur Lane》APK，包名：${actual_bundle_id}"
-		
+
 		# 处理不同版本
 		# Bilibili
 		if [ "$bundle_id" = "com.bilibili.azurlane" ]; then
@@ -168,7 +168,7 @@ download_jmbq_patch() {
 verify_and_decompile_apk() {
 	local actual_bundle_id=$(get_actual_bundle_id)
 	local apk_file="${actual_bundle_id}.apk"
-	
+
 	# 验证 APK 文件完整性
 	echo "正在验证 APK 文件完整性..."
 	if ! unzip -t "$apk_file" >/dev/null 2>&1; then
@@ -189,15 +189,15 @@ verify_and_decompile_apk() {
 
 	# 检查 JMBQ 目录是否存在
 	if [ ! -d "JMBQ" ]; then
-    	echo "错误: JMBQ 目录不存在！"
-    	exit 1
+		echo "错误: JMBQ 目录不存在！"
+		exit 1
 	fi
 }
 
 # 打补丁核心逻辑
 patch_apk() {
 	local actual_bundle_id=$(get_actual_bundle_id)
-	
+
 	echo "正在对《Azur Lane》进行补丁操作..."
 
 	# 1. 复制 JMBQ lib 文件
@@ -283,7 +283,7 @@ patch_apk() {
 # 构建最终的 APK 文件
 build_apk() {
 	local actual_bundle_id=$(get_actual_bundle_id)
-	
+
 	echo "正在重新构建已打补丁的 APK 文件..."
 	mkdir -p build
 	java -jar apktool.jar b -f "$actual_bundle_id" -o "build/${actual_bundle_id}.patched.apk"
@@ -321,24 +321,24 @@ optimize_and_sign_apk() {
 			echo "未找到 APK 文件"
 			continue
 		fi
-		
+
 		echo "正在处理: $f"
-		
+
 		# 创建临时文件
 		local UNSIGNED_APK="${f%.apk}.unsigned.apk"
-		
+
 		# 复制文件而不是移动，避免原文件丢失
 		cp "$f" "$UNSIGNED_APK"
-		
+
 		echo "正在优化: $f"
 		if zipalign -f 4 "$UNSIGNED_APK" "$f"; then
 			echo "优化成功"
 			rm "$UNSIGNED_APK"
-			
+
 			echo "正在为 $f 签名"
 			if apksigner sign --key "$PRIVATE_KEY" --cert "$CERTIFICATE" "$f"; then
 				echo "签名成功"
-				
+
 				# 验证签名
 				echo "验证签名..."
 				apksigner verify --verbose "$f"
@@ -356,12 +356,20 @@ optimize_and_sign_apk() {
 	echo "所有 APK 处理完成"
 }
 
+# 获取APK包名的函数
+get_package_name() {
+	local apk_file=$1
+	# 使用aapt获取包名
+	local package_name=$(aapt dump badging "$apk_file" | grep "package: name=" | cut -d"'" -f2)
+	echo "$package_name"
+}
+
 # 设置 GitHub Actions 的版本环境变量
 set_github_version() {
 	echo "正在设置版本环境变量..."
 	local version
 	local actual_bundle_id=$(get_actual_bundle_id)
-	
+
 	if [ "$bundle_id" = "com.bilibili.azurlane" ] || [ "$bundle_id" = "other" ]; then
 		# 对于国服和其他版本，尝试从APK中提取版本信息
 		if [ -f "${actual_bundle_id}.apk" ]; then
@@ -381,9 +389,24 @@ set_github_version() {
 			version="未知"
 		fi
 	fi
-	echo "PERSEUS_VERSION=$version" >>"$GITHUB_ENV"
 	echo "VERSION=$version" >>"$GITHUB_ENV"
 	echo "版本：$version 已设置。"
+
+	# 处理APK文件
+	for f in build/*.apk; do
+		if [ -f "$f" ]; then
+			echo "处理文件: $f"
+
+			# 获取包名
+			PACKAGE_NAME=$(get_package_name "$f")
+			echo "检测到包名: $PACKAGE_NAME"
+
+			# 将包名输出到GITHUB_ENV，供后续步骤使用
+			echo "BUNDLE=$PACKAGE_NAME" >>$GITHUB_ENV
+
+			break # 只处理第一个找到的APK文件
+		fi
+	done
 }
 
 # ==============================================================================
