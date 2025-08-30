@@ -2,7 +2,7 @@
 
 <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name" />
 
-**声明：本人小白，所以该仓库存在大量AI辅助修改的代码，存在很多问题，有些部分很抽象，欢迎各位大佬提出Issue改善**
+**声明：本人小白，经过AI大人的帮助才写出了这堆，所以该仓库有些部分很抽象，欢迎各位大佬提出Issue改善**
 
 此仓库模板允许您使用 GitHub Actions 来构建 JMBQ客户端。这对于不想在自己机器上搭建构建环境或难以理解教程的人来说非常有用。
 
@@ -14,7 +14,7 @@
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （已构建，未测试）
 
 
-**其他服务器客户端在考虑支持中，可在Release中查看已经构建的版本进行下载**
+**其他服务器客户端在火热支持中，如有需要请提供安装包链接，可在Release中查看已经构建的版本进行下载**
 
 ## 重要说明
 - 脚本会自动从 APKPure 下载最新的基础 APK 文件，对于国服，只会从固定的链接下载 APK 文件
