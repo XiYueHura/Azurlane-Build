@@ -356,59 +356,62 @@ optimize_and_sign_apk() {
 	echo "所有 APK 处理完成"
 }
 
-# 获取APK包名的函数
-get_package_name() {
-	local apk_file=$1
-	# 使用aapt获取包名
-	local package_name=$(aapt dump badging "$apk_file" | grep "package: name=" | cut -d"'" -f2)
-	echo "$package_name"
-}
-
 # 设置 GitHub Actions 的版本环境变量
 set_github_version() {
-	echo "正在设置版本环境变量..."
-	local version
-	local actual_bundle_id=$(get_actual_bundle_id)
+    echo "正在设置版本环境变量..."
+    local version="未知"
+    local package_name="未知"
+    local actual_bundle_id=$(get_actual_bundle_id)
 
-	if [ "$bundle_id" = "com.bilibili.azurlane" ] || [ "$bundle_id" = "other" ]; then
-		# 对于国服和其他版本，尝试从APK中提取版本信息
-		if [ -f "${actual_bundle_id}.apk" ]; then
-			# 使用aapt工具获取版本信息
-			if command -v aapt >/dev/null 2>&1; then
-				version=$(aapt dump badging "${actual_bundle_id}.apk" | grep "versionName" | sed "s/.*versionName='\([^']*\)'.*/\1/")
-			else
-				version="未知（需要aapt工具）"
-			fi
-		else
-			version="未知"
-		fi
-	else
-		if [ -f "AzurLane/manifest.json" ]; then
-			version=$(jq -r '.version_name' AzurLane/manifest.json)
-		else
-			version="未知"
-		fi
-	fi
-	echo "VERSION=$version" >>"$GITHUB_ENV"
-	echo "版本：$version 已设置。"
+    # 查找aapt工具
+    local BUILD_TOOLS_DIR=$(find $ANDROID_HOME/build-tools -maxdepth 1 -type d | sort -V | tail -n 1)
+    local AAPT_PATH="$BUILD_TOOLS_DIR/aapt"
 
-	# 处理APK文件
-	for f in build/*.apk; do
-		if [ -f "$f" ]; then
-			echo "处理文件: $f"
+    # 检查APK文件是否存在
+    if [ -f "${actual_bundle_id}.apk" ]; then
+        # 检查aapt工具是否存在
+        if [ -f "$AAPT_PATH" ]; then
+            echo "使用aapt工具提取APK信息: $AAPT_PATH"
+            
+            # 从APK中提取版本信息
+            version=$("$AAPT_PATH" dump badging "${actual_bundle_id}.apk" | grep "versionName" | sed "s/.*versionName='\([^']*\)'.*/\1/" | head -1)
+            
+            # 从APK中提取包名
+            package_name=$("$AAPT_PATH" dump badging "${actual_bundle_id}.apk" | grep "package: name=" | cut -d"'" -f2 | head -1)
+            
+            # 验证提取结果
+            if [ -z "$version" ] || [ "$version" = "''" ]; then
+                version="未知"
+                echo "警告：无法从APK提取版本信息"
+            fi
+            
+            if [ -z "$package_name" ] || [ "$package_name" = "''" ]; then
+                package_name="未知"
+                echo "警告：无法从APK提取包名"
+            fi
+            
+            echo "提取到的版本: $version"
+            echo "提取到的包名: $package_name"
+            
+        else
+            echo "错误：找不到aapt工具: $AAPT_PATH"
+            echo "可用的build-tools目录:"
+            find $ANDROID_HOME/build-tools -maxdepth 1 -type d
+        fi
+    else
+        echo "错误：APK文件不存在: ${actual_bundle_id}.apk"
+        echo "当前目录文件:"
+        ls -la
+    fi
 
-			# 获取包名
-			PACKAGE_NAME=$(get_package_name "$f")
-			echo "检测到包名: $PACKAGE_NAME"
-
-			# 将包名输出到GITHUB_ENV，供后续步骤使用
-			echo "BUNDLE=$PACKAGE_NAME" >>$GITHUB_ENV
-
-			break # 只处理第一个找到的APK文件
-		fi
-	done
+    # 设置GitHub环境变量
+    echo "VERSION=$version" >> "$GITHUB_ENV"
+    echo "BUNDLE=$package_name" >> "$GITHUB_ENV"
+    
+    echo "版本信息已设置:"
+    echo "  - 版本: $version"
+    echo "  - 包名: $package_name"
 }
-
 # ==============================================================================
 # 脚本主执行流程
 # ==============================================================================
