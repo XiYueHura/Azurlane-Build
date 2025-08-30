@@ -166,7 +166,7 @@ patch_apk() {
 	fi
 	echo "已找到 UnityPlayerActivity.smali 文件，路径为: $SMALI_FILE"
 
-	local oncreate=$(grep -n -m 1 'onCreate' "$SMALI_FILE" | sed  's/[0-9]*\:\(.*\)/\1/')
+	local oncreate=$(grep -n -m 1 'onCreate' "$SMALI_FILE" | sed  's/[0-9]*\:\(.*\)/\1/')
 	if [ -z "$oncreate" ]; then
 		echo "错误: <oncreate> 方法未找到！"
 		exit 1
