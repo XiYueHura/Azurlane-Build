@@ -256,23 +256,23 @@ patch_apk() {
 
 	echo "成功复制 JMBQ smali 文件到 ${actual_bundle_id}/smali_classes${NEW_CLASS_NUM}/"
 
-	# 3. 修改 CoreComponentFactory.smali
-	# 在指定目录下自动查找 CoreComponentFactory.smali 文件
-	local SMALI_FILE=$(find "${actual_bundle_id}" -type f -name "CoreComponentFactory.smali")
+	# 3. 修改 UnityPlayerActivity.smali
+	# 在指定目录下自动查找 UnityPlayerActivity.smali 文件
+	local SMALI_FILE=$(find "${actual_bundle_id}" -type f -name "UnityPlayerActivity.smali")
 	# 检查是否找到了文件
 	if [ -z "$SMALI_FILE" ]; then
-		echo "错误: CoreComponentFactory.smali 文件未找到！"
+		echo "错误: UnityPlayerActivity.smali 文件未找到！"
 		exit 1
 	fi
-	echo "已找到 CoreComponentFactory.smali 文件，路径为: $SMALI_FILE"
+	echo "已找到 UnityPlayerActivity.smali 文件，路径为: $SMALI_FILE"
 
 	local oninit=$(grep -n -m 1 '.method public constructor <init>()V' "$SMALI_FILE" | sed 's/[0-9]*\:\(.*\)/\1/')
 	if [ -z "$oninit" ]; then
 		echo "错误: <init> 方法未找到！"
 		exit 1
 	fi
-	sed -i "N; s#\($oninit\n    .locals 0\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
-	echo "正在修改 CoreComponentFactory.smali 文件..."
+	sed -i "N; s#\($oninit\n    .locals [0-9]\+\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
+	echo "正在修改 UnityPlayerActivity.smali 文件..."
 
 	# 4. 修改 AndroidManifest.xml
 	echo "正在修改 AndroidManifest.xml 文件..."
