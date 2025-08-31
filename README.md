@@ -22,7 +22,7 @@
 
 ## 不支持或存在问题的版本
 
-- **韩服 (KR)**: kr.txwy.and.blhx （已构建，运行异常，点开后没有任何反应，原因未知）
+- **韩服 (KR)**: kr.txwy.and.blhx （已构建，运行异常，点开后没有任何反应，也许是触发反作弊了，不会解决）
 - **华为服（Huawei）** com.bilibili.blhx.huawei （已构建，运行异常，点开后第一个页面卡住，初步判断是修改游戏后APK签名不是官方的，导致HMS Core初始化失败从而无法进入游戏）
 
 可能存在的Bug：请参考[Issue](https://github.com/JMBQ/azurlane/issues)
