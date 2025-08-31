@@ -2,7 +2,7 @@
 
 1. 安装对应服的原版客户端，并确定能够正常显示更新游戏的弹窗。
 
-2. 使用MT管理器复制该客户端的obb文件，操作流程：打开MT管理器，依次打开Android → obb → xxx.xxx.xxx（该服务器客户端的包名就是文件夹名称，如日服的为：com.YoStarJP.AzurLane），在文件夹内能看到一个以obb结尾的文件，大小1G左右，将该文件复制到其他目录，例如根目录下的Download文件夹内，如果有以下提示无法继续，请给予MT管理器Root权限或使用Shiziku，[Shizuku](https://shizuku.rikka.app/zh-hans/)的使用方法可以参考[Shizuku用户手册](https://shizuku.rikka.app/zh-hans/guide/setup/)，优先使用无线调试激活。
+2. 使用MT管理器复制该客户端的obb文件，操作流程：打开MT管理器，依次打开Android → obb → xxx.xxx.xxx（该服务器客户端的包名就是文件夹名称，如日服的为：com.YoStarJP.AzurLane），在文件夹内能看到一个以obb结尾的文件，大小1G左右，将该文件复制到其他目录，例如根目录下的Download文件夹内，如果有以下提示无法继续，模拟器请在设置打开Root，重启后永久授权MT管理器Root权限后再次尝试即可（模拟器一般不会有这个提示的）；如果你是手机，由于Root对于大部分手机过于复杂，请使用Shiziku，[Shizuku](https://shizuku.rikka.app/zh-hans/)的使用方法可以参考[Shizuku用户手册](https://shizuku.rikka.app/zh-hans/guide/setup/)，优先使用无线调试激活。
 
    ![Screenshot_2025-08-31-17-48-05-886_bin mt plus](https://github.com/user-attachments/assets/d1e6f963-1c57-4ed0-9b4e-7b07041571bc)
 
