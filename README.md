@@ -6,6 +6,10 @@
 
 此仓库模板允许您使用 GitHub Actions 来构建 JMBQ客户端。这对于不想在自己机器上搭建构建环境或难以理解教程的人来说非常有用。
 
+## 关于外服 - 请务必阅读，否则你可能无法进入游戏！
+
+[外服使用方法](https://github.com/XiYueHura/Azurlane-Build/blob/main/Global.md)
+
 ## 支持的版本
 
 如果出现权限申请界面未弹出或者悬浮窗不显示的问题请提出issue，本人精力有限有时候可能会弄错
