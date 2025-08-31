@@ -8,6 +8,8 @@
 
 ## 支持的版本
 
+如果出现权限申请界面未弹出或者悬浮窗不显示的问题请提出issue，本人精力有限有时候可能会弄错
+
 - **B服 (Bilibili)**: com.bilibili.azurlane （构建正常，加载正常，MuMu模拟器未闪退，功能正常使用）
 - **应用宝服 (Tencent)**: com.bilibili.azurlane （构建正常，加载正常，MuMu模拟器未闪退，功能未测试）
 - **国际服 (EN)**: com.YoStarEN.AzurLane （构建正常，游戏加载正常，功能未测试，欢迎测试）
