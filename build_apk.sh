@@ -271,8 +271,14 @@ patch_apk() {
 		echo "错误: <init> 方法未找到！"
 		exit 1
 	fi
-	sed -i "N; s#\($oninit\n    .locals [0-9]\+\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
+
 	echo "正在修改 UnityPlayerActivity.smali 文件..."
+	sed -i "N; s#\($oninit\n    .locals 0\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
+	if [ $? -ne 0 ]; then
+    	echo "错误：添加代码失败，请检查文件权限或内容。"
+	else
+    	echo "代码添加成功！"
+	fi
 
 	# 4. 修改 AndroidManifest.xml
 	echo "正在修改 AndroidManifest.xml 文件..."
