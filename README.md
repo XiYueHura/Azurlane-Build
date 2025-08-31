@@ -8,7 +8,7 @@
 
 ## 支持的版本
 
-- **国服 (CN)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用）
+- **B服 (Bilibili)**: com.bilibili.azurlane （构建正常，MuMu模拟器未闪退，功能正常使用）
 - **国际服 (EN)**: com.YoStarEN.AzurLane （构建正常，游戏加载正常，功能未测试，欢迎测试）
 - **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试，欢迎测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （构建正常，游戏加载正常，功能未测试，欢迎测试）
