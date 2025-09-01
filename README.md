@@ -16,6 +16,7 @@
 
 - **B服 (Bilibili)**: com.bilibili.azurlane （构建正常，加载正常，MuMu模拟器未闪退，功能正常使用）
 - **应用宝服 (Tencent)**: com.tencent.tmgp.bilibili.blhx （构建正常，加载正常，MuMu模拟器未闪退，功能未测试）
+- **4399服 (4399)**: com.bilibili.blhx.m4399 （构建正常，加载正常，MuMu模拟器未闪退，功能未测试）
 - **国际服 (EN)**: com.YoStarEN.AzurLane （构建正常，游戏加载正常，功能未测试，欢迎测试）
 - **日服 (JP)**: com.YoStarJP.AzurLane （构建正常，游戏加载正常，功能未测试，欢迎测试）
 - **台服 (TW)**: com.hkmanjuu.azurlane.gp （构建正常，游戏加载正常，功能未测试，欢迎测试）
@@ -38,6 +39,9 @@
 **B服**
 <img width="1633" height="919" alt="472a1cb6-48e9-4366-8df3-13ac0c2358dc" src="https://github.com/user-attachments/assets/3797812c-a3a7-42c1-a1af-17a464c6daf8" />
 <img width="1635" height="969" alt="{75C6C3EE-5474-488D-BDE6-62138933B16E}" src="https://github.com/user-attachments/assets/581eb9dc-f2da-4175-bd43-4de2353c5dcb" />
+
+**4399服**
+<img width="1635" height="968" alt="{3D81AEB5-C303-4F5E-8A52-9C785F002A0B}" src="https://github.com/user-attachments/assets/0c72f076-d29f-4cb0-a127-77d8c2ffc59d" />
 
 **日服**
 <img width="1635" height="969" alt="QQ20250829-205032" src="https://github.com/user-attachments/assets/583c27c2-db2c-4e3c-9f27-42e3d9db1bd0" />
