@@ -131,7 +131,7 @@ jobs:
             ACTUAL_ID="${{ env.BUNDLE_ID }}"
           fi
           
-          APK_FILE=$(find build -name "${ACTUAL_ID}*.apk" -print -quit)
+          APK_FILE=$(find build -name "${{ env.BUNDLE }}*.apk" -print -quit)
           
           if [ -z "$APK_FILE" ]; then
             echo "Error: No APK file found in build directory!"
