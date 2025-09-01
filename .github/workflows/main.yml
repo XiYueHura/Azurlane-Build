@@ -166,7 +166,7 @@ jobs:
           # 使用 `tag` 参数定义 Release 的标签
           tag: "${{ github.event.inputs.other_region_id }}-v${{ env.VERSION }}"
           # 使用 `name` 参数定义 Release 的名称
-          name: "${{ env.BUNDLE }} JMBQ Release v${{ env.VERSION }}"
+          name: "${{ env.BUNDLE }} JMBQ Build v${{ env.VERSION }}"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
           artifacts: "${{ env.BUNDLE }} JMBQ.7z.*"
           # 允许更新已存在的 Release
