@@ -16,8 +16,13 @@ on:
           - 'TW'
           - 'CN'
           - 'OTHER'
+      other_region_id:
+        description: '区服名称-必须'
+        required: true
+        type: string
+        default: ''
       other_bundle_id:
-        description: '区服名称或者包名（请填入全英文，且不包含空格，例如 百度服 请填入 baidu 即可）'
+        description: '包名（如果不知道确切包名，请填入中文的拼音即可，全英文且不包含空格，例如 百度服 请填入 baidu 即可）'
         required: false
         type: string
         default: ''
@@ -106,6 +111,8 @@ jobs:
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
         run: |
+          chmod +x build_apk.sh
+          
           if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
             ./build_apk.sh other "${{ env.ACTUAL_BUNDLE_ID }}" "${{ env.DOWNLOAD_URL }}"
           elif [ "${{ env.BUNDLE_ID }}" = "com.bilibili.azurlane" ]; then
@@ -166,7 +173,7 @@ jobs:
           allowUpdates: true
           # 添加 Release 说明
           body: |
-            区服: ${{ env.REGION }}
+            区服: ${{ github.event.inputs.other_region_id }}
             包名: ${{ env.BUNDLE }}
             版本: ${{ env.VERSION }}
             构建日期: ${{ env.BUILD_TIME }}

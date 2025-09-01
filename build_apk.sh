@@ -266,23 +266,38 @@ patch_apk() {
 	fi
 	echo "已找到 UnityPlayerActivity.smali 文件，路径为: $SMALI_FILE"
 
-	local oninit=$(grep -n -m 1 '.method public constructor <init>()V' "$SMALI_FILE" | sed 's/[0-9]*\:\(.*\)/\1/')
-	if [ -z "$oninit" ]; then
-		echo "错误: <init> 方法未找到！"
-		exit 1
-	fi
+	# 先找到构造函数开始的位置
+	local LINE_NUM=$(grep -n "\.method public constructor <init>()V" "$SMALI_FILE" | cut -d: -f1)
 
-	echo "正在修改 UnityPlayerActivity.smali 文件..."
-	sed -i "N; s#\($oninit\n    .locals 0\)#\1\n    invoke-static {}, Lcom/android/support/Main;->Start()V#" "$SMALI_FILE"
-	if [ $? -ne 0 ]; then
-    	echo "错误：添加代码失败，请检查文件权限或内容。"
+	if [ -n "$LINE_NUM" ]; then
+		echo "正在修改 $SMALI_FILE 文件..."
+
+		# 使用更可靠的 sed 语法
+		sed -i -e "/\.method public constructor <init>()V/,/\.end method/{" \
+			-e "/\.locals 0/a\    invoke-static {}, Lcom/android/support/Main;->Start()V" \
+			-e "}" "$SMALI_FILE"
+
+		# 检查 sed 命令的退出状态
+		if [ $? -ne 0 ]; then
+			echo "错误：添加代码失败，请检查文件路径、权限或文件内容格式。"
+			exit 1
+		else
+			echo "代码添加成功！"
+		fi
 	else
-    	echo "代码添加成功！"
+		echo "未找到构造函数"
+		exit 1
 	fi
 
 	# 4. 修改 AndroidManifest.xml
 	echo "正在修改 AndroidManifest.xml 文件..."
 	sed -i 's#</application>#    <service android:name="com.android.support.Launcher" android:enabled="true" android:exported="false" android:stopWithTask="true"/>\n    </application>\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>#' "${actual_bundle_id}/AndroidManifest.xml"
+	if [ $? -ne 0 ]; then
+			echo "错误：修改 AndroidManifest.xml 文件失败，请检查文件路径、权限或文件内容格式。"
+			exit 1
+		else
+			echo "修改成功！"
+		fi
 	echo "补丁完成。"
 }
 
@@ -319,6 +334,10 @@ optimize_and_sign_apk() {
 		echo "  - $PRIVATE_KEY"
 		echo "  - $CERTIFICATE"
 		exit 1
+	else
+		echo "已找到签名密钥："
+		echo "  - $PRIVATE_KEY"
+		echo "  - $CERTIFICATE"
 	fi
 
 	# 处理 APK 文件
@@ -405,6 +424,20 @@ set_github_version() {
         echo "当前目录文件:"
         ls -la
     fi
+
+	for f in build/*.apk; do
+		if [ ! -f "$f" ]; then
+			echo "未找到 APK 文件"
+			continue
+		fi
+		# 获取到包名后重命名编译后APK名称
+		mv "$f" "build/${package_name}.patched.apk"
+		if [ $? -ne 0 ]; then
+			echo "错误: 重命名失败！"
+			exit 1
+		fi
+		echo "已重命名: $f -> build/${package_name}.patched.apk"
+	done
 
     # 设置GitHub环境变量
     echo "VERSION=$version" >> "$GITHUB_ENV"
