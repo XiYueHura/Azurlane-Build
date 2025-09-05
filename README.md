@@ -49,6 +49,6 @@ Potential Bugs: Please refer to [Issues](https://github.com/JMBQ/azurlane/issues
 **Japanese Server**
 <img width="1635" height="969" alt="QQ20250829-205032" src="https://github.com/user-attachments/assets/583c27c2-db2c-4e3c-9f27-42e3d9db1bd0" />
 
-## References and Repositories
+## Credits
 1. https://github.com/JMBQ/azurlane
 2. https://github.com/n0k0m3/PerseusCI
