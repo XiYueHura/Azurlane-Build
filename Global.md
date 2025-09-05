@@ -8,7 +8,7 @@
     *   Copy this file to another directory (e.g., the `Download` folder).
     *   If you encounter permission issues:
         *   **On Emulators**: Enable Root in settings, restart, grant MT Manager permanent Root access, and try again. Most emulators won't have this prompt.
-        *   **On Physical Phones**: Rooting can be complex. Use [Shizuku](https://shizuku.rikka.app/zh-hans/) instead. Refer to the [Shizuku User Guide](https://shizuku.rikka.app/zh-hans/guide/setup/) for setup instructions, preferably using wireless debugging.
+        *   **On Physical Phones**: Rooting can be complex. Use [Shizuku](https://shizuku.rikka.app/) instead. Refer to the [Shizuku User Guide](https://shizuku.rikka.app/guide/setup/) for setup instructions, preferably using wireless debugging.
 
 3.  **After copying the OBB file**:
     *   **If your device/emulator is Rooted** and has the core patch module correctly configured with **APK signature verification disabled**, you can install the patched APK directly over the original app. Then, proceed to step 5.
