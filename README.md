@@ -18,7 +18,7 @@ This repository template allows you to use GitHub Actions to build the JMBQ clie
 If you encounter issues like the permission request screen not popping up or the floating window not displaying, please submit an issue. My energy is limited, and I might make mistakes sometimes.
 
 - **Bilibili Server (CN)**: com.bilibili.azurlane (Builds successfully, loads normally, no crashes on MuMu emulator, features work correctly)
-- **Tencent/MyApp Server (CN)**: com.tencent.tmgp.bilibili.blhx (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
+- **Tencent Server (CN)**: com.tencent.tmgp.bilibili.blhx (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
 - **4399 Server (CN)**: com.bilibili.blhx.m4399 (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
 - **American Server (EN)**: com.YoStarEN.AzurLane (Builds successfully, game loads normally, features not tested, welcome to test)
 - **Japanese Server (JP)**: com.YoStarJP.AzurLane (Builds successfully, game loads normally, features not tested, welcome to test)
