@@ -2,6 +2,8 @@
 
 <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name" />
 
+**JMBQ 2.8 Updated!**
+
 **中文版本**
 [README](https://github.com/XiYueHura/Azurlane-Build/blob/main/README_zh.md)
 
