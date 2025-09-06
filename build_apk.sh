@@ -143,7 +143,7 @@ download_azurlane() {
 download_jmbq_patch() {
 	if [ ! -d "JMBQ" ]; then
 		local REPO="JMBQ/azurlane"
-		local FILENAME="MOD_MENU_2.70.zip"
+		local FILENAME="MOD_MENU_2.81.zip"
 
 		echo "正在下载 JMBQ 补丁文件 $FILENAME ..."
 		curl -L "https://github.com/$REPO/releases/latest/download/$FILENAME" -o "JMBQ.zip"
