@@ -425,19 +425,21 @@ set_github_version() {
         ls -la
     fi
 
-	for f in build/*.apk; do
-		if [ ! -f "$f" ]; then
-			echo "未找到 APK 文件"
-			continue
-		fi
-		# 获取到包名后重命名编译后APK名称
-		mv "$f" "build/${package_name}.patched.apk"
-		if [ $? -ne 0 ]; then
-			echo "错误: 重命名失败！"
-			exit 1
-		fi
-		echo "已重命名: $f -> build/${package_name}.patched.apk"
-	done
+	if [ "$bundle_id" = "other" ]; then
+		for f in build/*.apk; do
+			if [ ! -f "$f" ]; then
+				echo "未找到 APK 文件"
+				continue
+			fi
+			# 获取到包名后重命名编译后APK名称
+			mv "$f" "build/${package_name}.patched.apk"
+			if [ $? -ne 0 ]; then
+				echo "错误: 重命名失败！"
+				exit 1
+			fi
+			echo "已重命名: $f -> build/${package_name}.patched.apk"
+		done
+	fi
 
     # 设置GitHub环境变量
     echo "VERSION=$version" >> "$GITHUB_ENV"
