@@ -1,4 +1,4 @@
-**非国服客户端的安装包会小一些，因为这些版本通常都用独立的OBB数据文件喵~如果指挥官只装了Release里的APK，没有原版OBB数据的话，可能会遇到 [这个问题](https://github.com/JMBQ/azurlane/issues/34#issuecomment-3239785490) 哦…记得按下面的步骤来呢~**
+**非国服客户端的安装包会小一些，因为这些版本通常都用独立的OBB数据文件喵~如果指挥官只装了Release里的APK，没有原版OBB数据的话，可能会遇到[这个问题](https://github.com/JMBQ/azurlane/issues/34#issuecomment-3239785490)，记得按下面的步骤来呢**
 
 ---
 
