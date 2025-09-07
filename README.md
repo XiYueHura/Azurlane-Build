@@ -4,13 +4,13 @@
 
 <center>
 
-# ♿ AzurLane JMBQ 构建发布喵~
+# ♿ AzurLane JMBQ 构建发布
 
 [简体中文](https://github.com/XiYueHura/Azurlane-Build/blob/main/README.md) | [ENGLISH](https://github.com/XiYueHura/Azurlane-Build/blob/main/README_en.md)
 
 **🎉 所有客户端的 JMBQ 2.8 版本都已经更新啦！快去Release里看看吧~**
 
-> **⚠️ 喵呜警告：**
+> **⚠️ 警告：**
 使用Mod可能会有未知的风险哦，如果指挥官一定要用的话，要记住这句话喵：
 用就别怕，怕就别用，用完被封了不要哭唧唧喵~
 
@@ -43,6 +43,8 @@
 | **4399服 (4399)** | com.bilibili.blhx.m4399       | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **小米服 (Xiaomi)** | com.bilibili.blhx.mi          | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **九游服 (Uc)**   | com.bilibili.blhx.uc          | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
+| **Vivo服 (Vivo)**   | com.bilibili.blhx.vivo        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
+| **OPPO服 (OPPO)**   | com.bilibili.blhx.nearme.gamecenter        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **美服 (EN)**     | com.YoStarEN.AzurLane        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **日服 (JP)**     | com.YoStarJP.AzurLane        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **台服 (TW)**     | com.hkmanjuu.azurlane.gp     | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
