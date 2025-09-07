@@ -1,24 +1,30 @@
-**The installation package for non-CN servers is small because these versions typically use separate OBB data files. If you only install the APK from the Release section without the original OBB data, you may encounter [this issue](https://github.com/JMBQ/azurlane/issues/34#issuecomment-3239785490). Follow the correct procedure below:**
+**非国服客户端的安装包会小一些，因为这些版本通常都用独立的OBB数据文件喵~如果指挥官只装了Release里的APK，没有原版OBB数据的话，可能会遇到 [这个问题](https://github.com/JMBQ/azurlane/issues/34#issuecomment-3239785490) 哦…记得按下面的步骤来呢~**
 
-1.  **Install the original client** for your target server and verify it can display the game update popup normally.
+---
 
-2.  **Copy the OBB file** using MT Manager:
-    *   Navigate to: `Android → obb → [package_name]` (e.g., `com.YoStarJP.AzurLane` for JP server).
-    *   Locate the `.obb` file (approx. 1GB) inside this folder.
-    *   Copy this file to another directory (e.g., the `Download` folder).
-    *   If you encounter permission issues:
-        *   **On Emulators**: Enable Root in settings, restart, grant MT Manager permanent Root access, and try again. Most emulators won't have this prompt.
-        *   **On Physical Phones**: Rooting can be complex. Use [Shizuku](https://shizuku.rikka.app/) instead. Refer to the [Shizuku User Guide](https://shizuku.rikka.app/guide/setup/) for setup instructions, preferably using wireless debugging.
+1.  **先装原版客户端喵**：给你想玩的服务器装好原版客户端，确认它能正常显示游戏更新弹窗再说~
+    *   **如果手机/模拟器已经Root了**，而且也配好了核心破解模块（**禁用了APK签名验证**），可以直接装修改版APK覆盖原版应用，然后跳到第4步就好啦~
+    *   **如果没Root**…那就继续看第2步喵
 
-3.  **After copying the OBB file**:
-    *   **If your device/emulator is Rooted** and has the core patch module correctly configured with **APK signature verification disabled**, you can install the patched APK directly over the original app. Then, proceed to step 5.
-    *   **If you are not Rooted**, proceed to step 4.
+---
 
-4.  **For non-Rooted devices**:
-    *   Ensure you have successfully backed up the OBB file (from Step 2).
-    *   Uninstall the original game.
-    *   Install the patched version (from the Releases section).
-    *   Open the game briefly until the loading screen appears, then close it.
-    *   Use MT Manager to copy the backed-up OBB file back to its original location: `Android → obb → [package_name]`.
+2.  **复制OBB文件**（用[MT管理器](https://mt2.cn/)喵）：
+    *   找到这个路径：`Android → obb → [包名]` （比如日服就是 `com.YoStarJP.AzurLane`）
+    *   在这个文件夹里找找那个大大的 `.obb` 文件（大概1GB左右喵）
+    *   把这个文件复制到别的目录去（比如 `Download` 文件夹喵）
+    *   **如果遇到权限问题**：
+        *   **在模拟器上**：在设置里开一下Root权限，重启MT管理器，给MT管理器永久授权Root权限后再试试看喵（模拟器应该不会提示这个）
+        *   **在手机上**：获取Root权限有点麻烦呢…推荐用 [Shizuku](https://shizuku.rikka.app/zh-hans/) 喵，按照 [Shizuku 用户指南](https://shizuku.rikka.app/zh-hans/guide/setup/) 设置一下，建议先用“无线调试”方式激活~
 
-5.  Launch the game and enjoy!
+---
+
+3.  **复制好OBB文件之后**：
+    *   确认已经备份好OBB文件（在第2步喵）
+    *   卸载原版游戏喵
+    *   装上修改版（从Releases那里下载的喵）
+    *   开一次游戏，等到出现加载画面就可以退出了喵
+    *   用MT管理器把备份的OBB文件放回原来的位置：`Android → obb → [包名]`~
+
+---
+
+4.  **碧蓝航线，启动喵！🎮**
