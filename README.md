@@ -22,6 +22,7 @@ If you encounter issues like the permission request screen not popping up or the
 - **Bilibili Server (CN)**: com.bilibili.azurlane (Builds successfully, loads normally, no crashes on MuMu emulator, features work correctly)
 - **Tencent Server (CN)**: com.tencent.tmgp.bilibili.blhx (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
 - **4399 Server (CN)**: com.bilibili.blhx.m4399 (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
+- **Xiaomi Server (CN)**: com.bilibili.blhx.mi (Builds successfully, loads normally, no crashes on MuMu emulator, features not tested)
 - **American Server (EN)**: com.YoStarEN.AzurLane (Builds successfully, game loads normally, features not tested, welcome to test)
 - **Japanese Server (JP)**: com.YoStarJP.AzurLane (Builds successfully, game loads normally, features not tested, welcome to test)
 - **Taiwan Server (TW)**: com.hkmanjuu.azurlane.gp (Builds successfully, game loads normally, features not tested, welcome to test)
