@@ -45,7 +45,7 @@
 | **应用宝服 (Tencent)** | com.tencent.tmgp.bilibili.blhx | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **4399服 (4399)** | com.bilibili.blhx.m4399       | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **小米服 (Xiaomi)** | com.bilibili.blhx.mi          | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
-| **九游服 (Uc)**   | com.bilibili.blhx.uc          | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
+| **九游服 (Uc)**   | com.bilibili.blhx.uc          | 2.8      | 构建✅ <br>加载✅ <br>功能✅ <br>感谢 [kashyu](https://github.com/kashyu) 使用反馈 |
 | **Vivo服 (Vivo)**   | com.bilibili.blhx.vivo        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **OPPO服 (OPPO)**   | com.bilibili.blhx.nearme.gamecenter        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **美服 (EN)**     | com.YoStarEN.AzurLane        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |

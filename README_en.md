@@ -42,7 +42,7 @@ This repository only publishes mods by integrating JMBQ's released mods into the
 | **Tencent Server**   | com.tencent.tmgp.bilibili.blhx | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **4399 Server**      | com.bilibili.blhx.m4399       | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **Xiaomi Server**    | com.bilibili.blhx.mi          | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **Jiuyou Server**        | com.bilibili.blhx.uc          | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **Jiuyou Server**        | com.bilibili.blhx.uc          | 2.8          | Build✅ <br>Load✅ <br>Features✅ <br>Thanks for testing, [kashyu](https://github.com/kashyu). |
 | **Vivo Server**        | com.bilibili.blhx.vivo        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **OPPO Server**        | com.bilibili.blhx.nearme.gamecenter        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **EN Server**        | com.YoStarEN.AzurLane        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
