@@ -47,7 +47,7 @@ This repository only publishes mods by integrating JMBQ's released mods into the
 | **OPPO Server**        | com.bilibili.blhx.nearme.gamecenter        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **EN Server**        | com.YoStarEN.AzurLane        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
 | **JP Server**        | com.YoStarJP.AzurLane        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **TW Server**        | com.hkmanjuu.azurlane.gp     | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **TW Server**        | com.hkmanjuu.azurlane.gp     | 2.8          | Build✅ <br>Load✅ <br>Features✅ <br>Thanks for testing, [Tokisa-Lonely](https://github.com/Tokisa-Lonely). |
 | **KR Server**        | kr.txwy.and.blhx             | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 | **Huawei Server**    | com.bilibili.blhx.huawei     | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 

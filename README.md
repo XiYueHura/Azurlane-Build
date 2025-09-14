@@ -50,7 +50,7 @@
 | **OPPO服 (OPPO)**   | com.bilibili.blhx.nearme.gamecenter        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **美服 (EN)**     | com.YoStarEN.AzurLane        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
 | **日服 (JP)**     | com.YoStarJP.AzurLane        | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
-| **台服 (TW)**     | com.hkmanjuu.azurlane.gp     | 2.8      | 构建✅ <br>加载✅ <br>功能❔ |
+| **台服 (TW)**     | com.hkmanjuu.azurlane.gp     | 2.8      | 构建✅ <br>加载✅ <br>功能✅ <br>感谢 [Tokisa-Lonely](https://github.com/Tokisa-Lonely) 使用反馈 |
 | **韩服 (KR)**     | kr.txwy.and.blhx             | 2.7      | 构建✅ <br>加载❌ <br>功能❌ |
 | **华为服 (Huawei)** | com.bilibili.blhx.huawei     | 2.7      | 构建✅ <br>加载❌ <br>功能❌ |
 
