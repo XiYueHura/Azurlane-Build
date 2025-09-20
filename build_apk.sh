@@ -449,11 +449,9 @@ set_github_version() {
 
     # 设置GitHub环境变量
     echo "VERSION=$version" >> "$GITHUB_ENV"
-    echo "BUNDLE=$package_name" >> "$GITHUB_ENV"
     
     echo "版本信息已设置:"
-    echo "  - 版本: $version"
-    echo "  - 包名: $package_name"
+    echo "  - 游戏版本: $version"
 }
 # ==============================================================================
 # 脚本主执行流程

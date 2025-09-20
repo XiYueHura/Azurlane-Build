@@ -1,5 +1,5 @@
 # 工作流名称
-name: JMBQ Build
+name: AzurLane JMBQ Build Work
 
 # 触发器：使用手动触发，并定义输入参数
 on:
@@ -16,24 +16,19 @@ on:
           - 'TW'
           - 'CN'
           - 'OTHER'
-      other_region_id:
-        description: '区服名称-必须'
+      region_id:
+        description: '区服名称-必须（易于分辨）'
         required: true
         type: string
         default: ''
-      other_bundle_id:
-        description: '包名（如果不知道确切包名，请填入中文的拼音即可，全英文且不包含空格，例如 百度服 请填入 baidu 即可）'
+      bundle_id:
+        description: '包名-仅OTHER需要填写（如果不知道确切包名，请填入中文的拼音即可，全英文且不包含空格，例如 百度服 请填入 baidu 即可）'
         required: false
         type: string
         default: ''
-      other_download_url:
-        description: 'APK下载链接，务必填入直链，最好使用国外云盘的直链，例如Google云盘'
+      download_url:
+        description: 'APK下载链接-仅CN和OTHER需要填写（务必填入直链，最好使用国外云盘的直链，例如Google云盘）'
         required: false
-        type: string
-        default: ''
-      jmbq_version:
-        description: 'JMBQ版本'
-        required: true
         type: string
         default: ''
 
@@ -70,28 +65,28 @@ jobs:
             echo "BUNDLE_ID=com.hkmanjuu.azurlane.gp" >> $GITHUB_ENV
             ;;
           "CN")
-          if [ -z "${{ github.event.inputs.other_download_url }}" ]; then
+          if [ -z "${{ github.event.inputs.download_url }}" ]; then
               echo "错误：在区服选择CN时需手动填入APK下载地址,链接必须为直链！"
               exit 1
             fi
 
             echo "BUNDLE_ID=com.bilibili.azurlane" >> $GITHUB_ENV
-            echo "DOWNLOAD_URL=${{ github.event.inputs.other_download_url }}" >> $GITHUB_ENV
+            echo "DOWNLOAD_URL=${{ github.event.inputs.download_url }}" >> $GITHUB_ENV
             ;;
           "OTHER")
             # 验证输入参数
-            if [ -z "${{ github.event.inputs.other_bundle_id }}" ]; then
+            if [ -z "${{ github.event.inputs.bundle_id }}" ]; then
               echo "错误：在区服选择other时需手动填入包名或易于分辨的英文名称！"
               exit 1
             fi
-            if [ -z "${{ github.event.inputs.other_download_url }}" ]; then
+            if [ -z "${{ github.event.inputs.download_url }}" ]; then
               echo "错误：在区服选择other时需手动填入APK下载地址,链接必须为直链！"
               exit 1
             fi
             
             echo "BUNDLE_ID=other" >> $GITHUB_ENV
-            echo "ACTUAL_BUNDLE_ID=${{ github.event.inputs.other_bundle_id }}" >> $GITHUB_ENV
-            echo "DOWNLOAD_URL=${{ github.event.inputs.other_download_url }}" >> $GITHUB_ENV
+            echo "ACTUAL_BUNDLE_ID=${{ github.event.inputs.bundle_id }}" >> $GITHUB_ENV
+            echo "DOWNLOAD_URL=${{ github.event.inputs.download_url }}" >> $GITHUB_ENV
             ;;
           esac
           echo "REGION=${{ github.event.inputs.region }}" >> $GITHUB_ENV
@@ -113,13 +108,22 @@ jobs:
         run: |
           yes | sdkmanager --install "build-tools;35.0.0"
 
-      # 步骤5：获取JMBQ最新版本下载链接
-      - name: Get JMBQ download link
+      # 步骤6：获取JMBQ最新版本下载链接和版本号
+      - name: Get JMBQ download link and version
         run: |
-          LINK=$(curl -s https://api.github.com/repos/JMBQ/azurlane/releases/latest | jq -r '.assets[0].browser_download_url')
-          echo "DOWNLOAD_LINK=$LINK" >> $GITHUB_ENV
+          # 获取最新的release信息
+          RELEASE_INFO=$(curl -s https://api.github.com/repos/JMBQ/azurlane/releases/latest)
+          
+          # 提取下载链接
+          DOWNLOAD_LINK=$(echo "$RELEASE_INFO" | jq -r '.assets[0].browser_download_url')
+          echo "DOWNLOAD_LINK=$DOWNLOAD_LINK" >> $GITHUB_ENV
+          
+          # 提取版本号（tag_name）
+          JMBQ_VERSION=$(echo "$RELEASE_INFO" | jq -r '.tag_name')
+          echo "JMBQ_VERSION=$JMBQ_VERSION" >> $GITHUB_ENV
+          echo "获取到JMBQ版本: $JMBQ_VERSION"
       
-      # 步骤6：构建 APK 文件
+      # 步骤7：构建 APK 文件
       - name: Build JMBQ APK
         run: |
           chmod +x build_apk.sh
@@ -132,34 +136,32 @@ jobs:
             ./build_apk.sh "${{ env.BUNDLE_ID }}"
           fi
 
-      # 步骤7：分卷压缩 APK
-      - name: Create split archives
+      # 步骤8：分卷压缩 build 文件夹
+      - name: Create split archives from build folder
         run: |
-          if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
-            ACTUAL_ID="${{ env.ACTUAL_BUNDLE_ID }}"
-          else
-            ACTUAL_ID="${{ env.BUNDLE_ID }}"
+          # 检查 build 文件夹是否存在
+          if [ ! -d "build" ]; then
+            echo "错误: build 文件夹不存在！"
+            exit 1
           fi
           
-          APK_FILE=$(find build -name "${{ env.BUNDLE }}*.apk" -print -quit)
-          
-          if [ -z "$APK_FILE" ]; then
-            echo "Error: No APK file found in build directory!"
-            APK_FILE=$(find build -name "*.apk" -print -quit)
-            if [ -z "$APK_FILE" ]; then
-              exit 1
-            fi
-            echo "Found APK file: $APK_FILE"
+          # 检查 build 文件夹中是否有文件
+          if [ -z "$(ls -A build)" ]; then
+            echo "错误: build 文件夹为空！"
+            exit 1
           fi
           
-          echo "Creating split archives for: $APK_FILE"
-
-          7z a -v800M "${{ env.BUNDLE }} JMBQ.7z" "$APK_FILE"
+          echo "build 文件夹内容:"
+          ls -la build/
           
-          echo "Generated split files:"
-          ls -lh "${{ env.BUNDLE }} JMBQ.7z"*
+          # 直接压缩整个 build 文件夹
+          echo "正在压缩 build 文件夹..."
+          7z a -v1000M "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z" build/
+          
+          echo "生成的分卷文件:"
+          ls -lh "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z"*      
 
-      # 步骤8：获取北京时间
+      # 步骤9：获取北京时间
       - name: Set Beijing time
         id: time_setter
         run: |
@@ -167,26 +169,24 @@ jobs:
           echo "BUILD_TIME=$BEIJING_TIME" >> $GITHUB_ENV
           echo "构建时间（北京时间）: $BEIJING_TIME"
 
-      # 步骤9：创建 Release 并上传所有分卷文件
+      # 步骤10：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
           # 使用 `tag` 参数定义 Release 的标签
-          tag: "${{ github.event.inputs.other_region_id }}-v${{ env.VERSION }}"
+          tag: "${{ env.JMBQ_VERSION }}"
           # 使用 `name` 参数定义 Release 的名称
-          name: "${{ env.BUNDLE }} JMBQ Build v${{ github.event.inputs.jmbq_version }}"
+          name: "AzurLane JMBQ ${{ env.JMBQ_VERSION }} Build"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "${{ env.BUNDLE }} JMBQ.7z.*"
+          artifacts: "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z.*"
           # 允许更新已存在的 Release
           allowUpdates: true
           # 添加 Release 说明
           body: |
-            区服: ${{ github.event.inputs.other_region_id }}
-            包名: ${{ env.BUNDLE }}
-            版本: ${{ env.VERSION }}
-            构建日期: ${{ env.BUILD_TIME }}
-            
-            **安装说明:**
-            1. 下载所有以 7z.00* 结尾的文件（有些时候有多个，有些时候只有一个，依据客户端大小决定）
-            2. 解压时只需要选择"XXXXX JMBQ.7z.001"解压即可`
-            3. 在解压后的文件夹中找到apk文件并安装
+            <details>
+              <summary>中文安装说明 - 点击展开</summary>
+                1. 在下方列表中找到你需要的版本前缀的文件，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（一定要全部下载）
+                2. 解压时只需要选择"XXXXX JMBQ XXX.7z.001"解压即可
+                3. 在解压后的文件夹中找到apk文件并安装
+                4. 如果你游玩的是国外服务器，请将文件内的obb文件按照 [外服使用方法](Global.md) 中的说明移入正确的文件夹内才可正常游玩
+            </details>
