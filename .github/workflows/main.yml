@@ -156,7 +156,7 @@ jobs:
           
           # 直接压缩整个 build 文件夹
           echo "正在压缩 build 文件夹..."
-          7z a -v1000M "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z" build/
+          7z a -v1000M -x!*.idsig "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z" build/
           
           echo "生成的分卷文件:"
           ls -lh "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z"*      
@@ -185,8 +185,15 @@ jobs:
           body: |
             <details>
               <summary>中文安装说明 - 点击展开</summary>
-                1. 在下方列表中找到你需要的版本前缀的文件，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（一定要全部下载）
-                2. 解压时只需要选择"XXXXX JMBQ XXX.7z.001"解压即可
-                3. 在解压后的文件夹中找到apk文件并安装
-                4. 如果你游玩的是国外服务器，请将文件内的obb文件按照 [外服使用方法](Global.md) 中的说明移入正确的文件夹内才可正常游玩
+                1. 在下方列表中找到你需要的版本前缀，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（例如你需要B服，那么你就下载以BiliBili开头的文件）</br>
+                2. 解压时只需要选择"XXX.7z.001"解压即可</br>
+                3. 在解压后的文件夹中找到apk文件并安装</br>
+                4. 如果你游玩的是国外服务器，请将文件内的obb文件按照 [外服使用方法](Global.md) 中的说明移入正确的文件夹内才可正常游玩，国内服务器忽略该条
+            </details>
+            <details>
+              <summary>English Installation Instructions - Click to expand</summary>
+                1. Find the version prefix you need in the list below, and download all files ending with 7z.00* that have that server name prefix (e.g., if you need the Bilibili version, download files starting with "BiliBili")</br>
+                2. When extracting, simply select the "XXX.7z.001" file to decompress</br>
+                3. Find the APK file in the extracted folder and install it</br>
+                4. If you are playing on international servers, please move the OBB files from the folder to the correct directory according to the instructions in [Global Server Usage](Global_en.md) to ensure proper gameplay. This step should be skipped for servers within China.
             </details>
