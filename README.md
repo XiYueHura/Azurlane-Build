@@ -8,7 +8,7 @@
 
 [简体中文](https://github.com/XiYueHura/Azurlane-Build/blob/main/README.md) | [ENGLISH](https://github.com/XiYueHura/Azurlane-Build/blob/main/README_en.md)
 
-**🎉 所有客户端的 JMBQ 2.8 版本都已经更新啦！快去Release里看看吧~**
+**🎉 JMBQ 2.9 版本已在更新中，请稍安勿躁~**
 
 > **⚠️ 警告：**
 使用Mod可能会有未知的风险哦，如果指挥官一定要用的话，要记住这句话喵：
@@ -69,3 +69,8 @@
 ## 📚 参考的内容和仓库喵
 1. [JMBQ/azurlane](https://github.com/JMBQ/azurlane)  
 2. [n0k0m3/PerseusCI](https://github.com/n0k0m3/PerseusCI)
+
+---
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/XiYueHura/Azurlane-Build.svg?variant=adaptive)](https://starchart.cc/XiYueHura/Azurlane-Build)
