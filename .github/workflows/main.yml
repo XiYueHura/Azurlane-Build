@@ -112,6 +112,12 @@ jobs:
       - name: Install build-tools
         run: |
           yes | sdkmanager --install "build-tools;35.0.0"
+
+      # 步骤5：获取JMBQ最新版本下载链接
+      - name: Get JMBQ download link
+        run: |
+          LINK=$(curl -s https://api.github.com/repos/JMBQ/azurlane/releases/latest | jq -r '.assets[0].browser_download_url')
+          echo "DOWNLOAD_LINK=$LINK" >> $GITHUB_ENV
       
       # 步骤6：构建 APK 文件
       - name: Build JMBQ APK
@@ -129,7 +135,6 @@ jobs:
       # 步骤7：分卷压缩 APK
       - name: Create split archives
         run: |
-          # 查找生成的 APK 文件
           if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
             ACTUAL_ID="${{ env.ACTUAL_BUNDLE_ID }}"
           else
@@ -140,7 +145,6 @@ jobs:
           
           if [ -z "$APK_FILE" ]; then
             echo "Error: No APK file found in build directory!"
-            # 尝试查找任何APK文件
             APK_FILE=$(find build -name "*.apk" -print -quit)
             if [ -z "$APK_FILE" ]; then
               exit 1
@@ -159,7 +163,6 @@ jobs:
       - name: Set Beijing time
         id: time_setter
         run: |
-          # 获取北京时间 (UTC+8)
           BEIJING_TIME=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
           echo "BUILD_TIME=$BEIJING_TIME" >> $GITHUB_ENV
           echo "构建时间（北京时间）: $BEIJING_TIME"

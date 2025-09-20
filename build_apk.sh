@@ -141,27 +141,33 @@ download_azurlane() {
 
 # 下载 JMBQ 补丁包
 download_jmbq_patch() {
-	if [ ! -d "JMBQ" ]; then
-		local REPO="JMBQ/azurlane"
-		local FILENAME="MOD_MENU_2.81.zip"
+    if [ ! -d "JMBQ" ]; then
+        # 检查外部传入的DOWNLOAD_LINK变量是否存在
+        if [ -z "$DOWNLOAD_LINK" ]; then
+            echo "错误: 未设置DOWNLOAD_LINK环境变量！"
+            exit 1
+        fi
 
-		echo "正在下载 JMBQ 补丁文件 $FILENAME ..."
-		curl -L "https://github.com/$REPO/releases/latest/download/$FILENAME" -o "JMBQ.zip"
-		if [ $? -ne 0 ]; then
-			echo "错误: 下载 JMBQ.zip 失败！"
-			exit 1
-		fi
+        # 从链接中提取文件名
+        local FILENAME=$(basename "$DOWNLOAD_LINK")
 
-		echo "正在解压 JMBQ.zip ..."
-		unzip -q "JMBQ.zip" -d "JMBQ"
-		if [ $? -ne 0 ]; then
-			echo "错误: 解压 JMBQ.zip 失败！"
-			exit 1
-		fi
+        echo "正在下载 JMBQ 补丁文件 $FILENAME ..."
+        curl -L "$DOWNLOAD_LINK" -o "$FILENAME"
+        if [ $? -ne 0 ]; then
+            echo "错误: 下载 $FILENAME 失败！"
+            exit 1
+        fi
 
-		rm "JMBQ.zip"
-		echo "JMBQ 补丁文件已成功解压。"
-	fi
+        echo "正在解压 $FILENAME ..."
+        unzip -q "$FILENAME" -d "JMBQ"
+        if [ $? -ne 0 ]; then
+            echo "错误: 解压 $FILENAME 失败！"
+            exit 1
+        fi
+
+        rm "$FILENAME"
+        echo "JMBQ 补丁文件已成功解压。"
+    fi
 }
 
 # 验证 APK 文件完整性并执行解包
@@ -200,13 +206,13 @@ patch_apk() {
 
 	echo "正在对《Azur Lane》进行补丁操作..."
 
-	# 1. 复制 JMBQ lib 文件
+	# 1. 复制 JMBQ assets 文件
 	echo "正在复制 JMBQ 库文件..."
-	if [ ! -d "${actual_bundle_id}/lib/" ]; then
-		echo "错误: 目标目录 ${actual_bundle_id}/lib/ 不存在！"
+	if [ ! -d "${actual_bundle_id}/assets/" ]; then
+		echo "错误: 目标目录 ${actual_bundle_id}/assets/ 不存在！"
 		exit 1
 	fi
-	cp -r JMBQ/lib/. "${actual_bundle_id}/lib/"
+	cp -r JMBQ/assets/. "${actual_bundle_id}/assets/"
 	if [ $? -ne 0 ]; then
 		echo "错误: 复制库文件失败！"
 		exit 1
