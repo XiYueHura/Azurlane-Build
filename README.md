@@ -20,6 +20,8 @@
 
 ## 🎉 最新动态
 
+**9.20/21:08 发布逻辑正在重构，可能会延迟发布，请见谅！**
+
 **JMBQ 2.9 版本正在陆续更新中，请耐心等待~**
 
 <img height="300" alt="台服预览" src="https://github.com/user-attachments/assets/f0d8171b-7c7d-4d1b-9f71-cbc8a8f5b04b" />
