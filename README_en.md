@@ -1,68 +1,72 @@
 <div align="center">
-    <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="Visit Counter" />
-</div>
+    <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="Visitor Count" />
 
-<center>
+# ♿ AzurLane JMBQ Build Releases
 
-# ♿ Azurlane JMBQ Build Releases
-
-[简体中文](https://github.com/XiYueHura/Azurlane-Build/blob/main/README.md) | [ENGLISH](https://github.com/XiYueHura/Azurlane-Build/blob/main/README_en.md)
-
-**🎉 JMBQ 2.8 builds for all clients have been updated! Please check the Releases section.**
-
-> **⚠️ Warning:**
-Using mods may involve unknown risks. If you insist on using them, remember this:
-You accept all responsibility for any consequences, including account bans.
-
-> **📝 Tips:** 
-This repository only publishes mods by integrating JMBQ's released mods into the game. It is not the original mod release repository. If you encounter issues other than game loading failures, such as feature malfunctions, you should raise an Issue in JMBQ's mod repository instead of here.
+[简体中文](README.md) | [ENGLISH](README_en.md)
 
 ---
 
-</center>
+## ⚠️ Important Notes
 
-**🌍 If you want to play on global servers - please read this, otherwise you may not be able to enter the game!**
+**Please read the following carefully before use:**
 
- - 👉 [Click here for global server usage instructions](https://github.com/XiYueHura/Azurlane-Build/blob/main/Global_en.md)
-
----
-
-## 🎮 Supported Versions
-
-> ⚠️ If you encounter issues such as permission request screens not popping up or floating windows not displaying, please submit an issue! Our resources are limited, and mistakes may occasionally occur.
-
-**✅ Normal | ❌ Unable to run or abnormal | ❔ Uncertain or untested**  
-(Since we only play on the Bilibili server, other servers are only tested for game loading functionality. Please test features yourself.)
-
-**🔥 Support for other server clients is in progress! If needed, please provide installation package links. Some servers may have issues—check the Releases section for available builds to download.**
-
-| Server               | Package Name                   | JMBQ Version | Status                      |
-|----------------------|--------------------------------|--------------|-----------------------------|
-| **Bilibili Server**  | com.bilibili.azurlane         | 2.8          | Build✅ <br>Load✅ <br>Features✅ |
-| **Tencent Server**   | com.tencent.tmgp.bilibili.blhx | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **4399 Server**      | com.bilibili.blhx.m4399       | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **Xiaomi Server**    | com.bilibili.blhx.mi          | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **Jiuyou Server**        | com.bilibili.blhx.uc          | 2.8          | Build✅ <br>Load✅ <br>Features✅ <br>Thanks for testing, [kashyu](https://github.com/kashyu). |
-| **Vivo Server**        | com.bilibili.blhx.vivo        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **OPPO Server**        | com.bilibili.blhx.nearme.gamecenter        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **EN Server**        | com.YoStarEN.AzurLane        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **JP Server**        | com.YoStarJP.AzurLane        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
-| **TW Server**        | com.hkmanjuu.azurlane.gp     | 2.8          | Build✅ <br>Load✅ <br>Features✅ <br>Thanks for testing, [Tokisa-Lonely](https://github.com/Tokisa-Lonely). |
-| **KR Server**        | kr.txwy.and.blhx             | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
-| **Huawei Server**    | com.bilibili.blhx.huawei     | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
-
-### 🚧 Problematic Versions:
-- 🫠 **KR Server**: No response after clicking—may be triggered by anti-cheat. No solution available.
-- 😵 **Huawei Server**: Stuck on the first screen—likely due to modified APK signatures failing HMS Core initialization. No solution available.
+- **Risk Warning**: Using mods may involve unknown risks. If you insist on using them, remember this:**You accept all responsibility for any consequences, including account bans.**
+- **Login Issues**: Repackaged APKs have signatures different from the official version, which may cause third-party authorization login to fail. Prioritize using QR code or verification code login.
+- **Global Server Usage**: Before playing on global servers, be sure to check the [Global Server Usage Guide](Global.md); otherwise, you may be unable to enter the game.
+- **Issue Reporting**: If you encounter problems such as permission request screens not popping up or floating windows not displaying, please submit an Issue.
 
 ---
 
-## 🐛 Known Bugs
+## 🎉 Latest News
 
-**Please check the [Issue section](https://github.com/JMBQ/azurlane/issues) to see if your problem has already been reported.**
+**JMBQ Version 2.9 is being rolled out gradually. Please wait patiently~**
+
+<img height="300" alt="Taiwan Server Preview" src="https://github.com/user-attachments/assets/f0d8171b-7c7d-4d1b-9f71-cbc8a8f5b04b" />
 
 ---
 
-## 📚 References and Repositories
+## 🎮 Supported Version Status
+
+**✅ Fully Supported | ❌ Not Working/Issues Exist | ❔ Untested/Status Uncertain**
+
+| Server               | JMBQ Version | Status                          |
+|----------------------|--------------|---------------------------------|
+| **Bilibili Server**  | 2.8          | Build✅ <br>Load✅ <br>Features✅ |
+| **App Treasure Server** | 2.8       | Build✅ <br>Load✅ <br>Features❔ |
+| **4399 Server**      | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **Xiaomi Server**    | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **9Game Server**     | 2.8          | Build✅ <br>Load✅ <br>Features✅ |
+| **Vivo Server**      | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **OPPO Server**      | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **EN Server**        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **JP Server**        | 2.8          | Build✅ <br>Load✅ <br>Features❔ |
+| **TW Server**        | 2.8          | Build✅ <br>Load✅ <br>Features✅ |
+| **KR Server**        | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
+| **Huawei Server**    | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
+
+### 🚧 Known Issues
+
+- **KR Server**: No response on launch, may trigger anti-cheat mechanisms.
+- **Huawei Server**: Lag on the startup screen, suspected to be due to HMS Core initialization failure caused by signature verification issues.
+
+---
+
+## 🐛 Reporting Issues
+
+**Before submitting an Issue, please check the [Existing Issue List](https://github.com/JMBQ/azurlane/issues) to see if the same problem has already been reported.**
+
+---
+
+## 📚 Reference Resources
+
 1. [JMBQ/azurlane](https://github.com/JMBQ/azurlane)  
 2. [n0k0m3/PerseusCI](https://github.com/n0k0m3/PerseusCI)
+
+---
+
+## 📊 Star History
+
+[![Star History Chart](https://starchart.cc/XiYueHura/Azurlane-Build.svg?variant=adaptive)](https://starchart.cc/XiYueHura/Azurlane-Build)
+
+</div>
