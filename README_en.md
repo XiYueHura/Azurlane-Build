@@ -36,12 +36,12 @@
 | **Tencent Server** | 2.9       | Build✅ <br>Load✅ <br>Features❔ |
 | **4399 Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **Xiaomi Server**    | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **Uc Server**     | 2.9          | Build✅ <br>Load✅ <br>Features✅ |
+| **Uc Server**     | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **Vivo Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **OPPO Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **EN Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **JP Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **TW Server**        | 2.9          | Build✅ <br>Load✅ <br>Features✅ |
+| **TW Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **KR Server**        | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 | **Huawei Server**    | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 
