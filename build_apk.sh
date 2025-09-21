@@ -174,6 +174,12 @@ download_jmbq_patch() {
 verify_and_decompile_apk() {
 	local actual_bundle_id=$(get_actual_bundle_id)
 	local apk_file="${actual_bundle_id}.apk"
+	
+    echo "调试信息:"
+	echo "文件名: $apk_file"
+	echo "文件存在: $( [ -f "$apk_file" ] && echo "是" || echo "否" )"
+	echo "文件可读: $( [ -r "$apk_file" ] && echo "是" || echo "否" )"
+	ls -la "$apk_file"
 
 	# 验证 APK 文件完整性
 	echo "正在验证 APK 文件完整性..."
