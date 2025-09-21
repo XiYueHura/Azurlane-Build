@@ -20,9 +20,9 @@
 
 ## 🎉 Latest News
 
-**JMBQ Version 2.9 is being rolled out gradually. Please wait patiently~**
+**9/21 - JMBQ Version 2.9 has been fully updated. Welcome to share your user experience feedback.**
 
-<img height="300" alt="Taiwan Server Preview" src="https://github.com/user-attachments/assets/f0d8171b-7c7d-4d1b-9f71-cbc8a8f5b04b" />
+<img alt="Preview" src="https://pic1.imgdb.cn/item/68cf6c76c5157e1a8820fff4.png" />
 
 ---
 
@@ -39,6 +39,7 @@
 | **Uc Server**     | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **Vivo Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **OPPO Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
+| **360 Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **EN Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **JP Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
 | **TW Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
