@@ -63,7 +63,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           # 使用 `tag` 参数定义 Release 的标签
-          tag: "${{ env.JMBQ_VERSION }}"
+          tag: "${{ env.JMBQ_VERSION }} Test"
           # 使用 `name` 参数定义 Release 的名称
           name: "AzurLane JMBQ ${{ env.JMBQ_VERSION }} Build Test"
           # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件

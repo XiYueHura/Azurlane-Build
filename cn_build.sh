@@ -88,10 +88,12 @@ VERIFY_APK() {
     local FILE_SIZE=$(stat -f%z "$DOWNLOAD_DIR/$APK_FILENAME" 2>/dev/null || stat -c%s "$DOWNLOAD_DIR/$APK_FILENAME" 2>/dev/null)
     [ "$FILE_SIZE" -lt 1024 ] && { echo "APK文件大小异常"; exit 1; }
     unzip -t "$DOWNLOAD_DIR/$APK_FILENAME" >/dev/null 2>&1 || { echo "APK文件损坏"; exit 1; }
+    echo "APK验证通过"
 }
 
 # APK 解包
 DECODE_APK() {
+    echo "APK反编译"
     java -jar "$DOWNLOAD_DIR/apktool.jar" d -f "$DOWNLOAD_DIR/$APK_FILENAME" -o "$DOWNLOAD_DIR/DECODE_Output"
 	if [ $? -ne 0 ]; then
 		echo "错误: APK 反编译失败！"
