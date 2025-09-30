@@ -165,6 +165,7 @@ PATCH_APK() {
     echo "补丁完成。"
 }
 
+# 打包APK
 BUILD_APK() {
 	echo "正在重新构建已打补丁的 APK 文件..."
 	java -jar "$DOWNLOAD_DIR/apktool.jar" b -f "$DOWNLOAD_DIR/DECODE_Output" -o "$DOWNLOAD_DIR/patched.apk"
@@ -173,6 +174,52 @@ BUILD_APK() {
 		exit 1
 	fi
 	echo "APK 构建成功"
+}
+
+# 优化并签名APK
+OPTIMIZE_AND_SIGN_APK() {
+	local KEY_DIR="$DOWNLOAD_DIR/key/"
+	local PRIVATE_KEY="${KEY_DIR}testkey.pk8"
+	local CERTIFICATE="${KEY_DIR}testkey.x509.pem"
+    local UNSIGNED_APK="patched.unsigned.apk"
+    local INPUT_APK="$DOWNLOAD_DIR/patched.apk"
+    local OUTPUT_APK="$DOWNLOAD_DIR/$UNSIGNED_APK"
+    local FINAL_APK="$INPUT_APK"
+
+    if [ ! -f "$INPUT_APK" ]; then
+        echo "错误：找不到输入APK文件: $INPUT_APK"
+        exit 1
+    fi
+
+	if [ ! -f "$PRIVATE_KEY" ] || [ ! -f "$CERTIFICATE" ]; then
+		echo "错误：找不到签名密钥文件"
+		echo "请确保以下文件存在："
+		echo "  - $PRIVATE_KEY"
+		echo "  - $CERTIFICATE"
+		exit 1
+	else
+		echo "已找到签名密钥："
+		echo "  - $PRIVATE_KEY"
+		echo "  - $CERTIFICATE"
+	fi
+
+	echo "正在优化"
+	if zipalign -f 4 "$INPUT_APK" "$OUTPUT_APK"; then
+		echo "优化成功"
+		rm "$INPUT_APK"
+
+		echo "正在签名"
+		if apksigner sign --key "$PRIVATE_KEY" --cert "$CERTIFICATE" "$OUTPUT_APK"; then
+			echo "签名成功"
+            mv "$OUTPUT_APK" "$FINAL_APK"
+		else
+			echo "签名失败"
+			exit 1
+		fi
+	else
+		echo "优化失败"
+		exit 1
+	fi
 }
 
 # 重命名APK并传回游戏版本
