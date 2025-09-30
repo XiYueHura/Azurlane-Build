@@ -1,7 +1,7 @@
 # 公共变量参数 部分从Github Action中传入
 BUILD_TOOLS_DIR=$(find $ANDROID_HOME/build-tools -maxdepth 1 -type d | sort -V | tail -n 1)
 AAPT_PATH="$BUILD_TOOLS_DIR/aapt"
-DOWNLOAD_DIR="./"
+DOWNLOAD_DIR="."
 GAME_SERVER=$1
 APK_FILENAME="$2.apk"
 APK_URL="$3"
@@ -87,8 +87,6 @@ VERIFY_APK() {
     
     local FILE_SIZE=$(stat -f%z "$DOWNLOAD_DIR/$APK_FILENAME" 2>/dev/null || stat -c%s "$DOWNLOAD_DIR/$APK_FILENAME" 2>/dev/null)
     [ "$FILE_SIZE" -lt 1024 ] && { echo "APK文件大小异常"; exit 1; }
-    
-    file "$DOWNLOAD_DIR/$APK_FILENAME" | grep -q "Zip archive" || { echo "APK文件格式无效"; exit 1; }
     unzip -t "$DOWNLOAD_DIR/$APK_FILENAME" >/dev/null 2>&1 || { echo "APK文件损坏"; exit 1; }
 }
 
