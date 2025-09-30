@@ -178,6 +178,7 @@ BUILD_APK() {
 
 # 优化并签名APK
 OPTIMIZE_AND_SIGN_APK() {
+    local PATH=$PATH:$BUILD_TOOLS_DIR
 	local KEY_DIR="$DOWNLOAD_DIR/key/"
 	local PRIVATE_KEY="${KEY_DIR}testkey.pk8"
 	local CERTIFICATE="${KEY_DIR}testkey.x509.pem"
