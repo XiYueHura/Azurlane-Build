@@ -299,7 +299,8 @@ MOVE_PATCHED_APK() {
 
 # 重新打包XAPK
 REPACK() {
-    zip -r "${DOWNLOAD_DIR}/${GAME_BUNDLE_ID}.xapk" "${DOWNLOAD_DIR}/${GAME_BUNDLE_ID}"/*
+    cd "${DOWNLOAD_DIR}/${GAME_BUNDLE_ID}" && zip -r "${DOWNLOAD_DIR}/${GAME_BUNDLE_ID}.xapk" *
+    cd - > /dev/null
 }
 
 # 生成7z分卷压缩包
