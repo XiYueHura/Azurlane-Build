@@ -40,7 +40,7 @@ DOWNLOAD_APKEEP() {
     local FILENAME="apkeep"
 
     local API_RESPONSE=$(curl -s "https://api.github.com/repos/${OWNER}/${REPO}/releases/latest")
-    local DOWNLOAD_LINK=$(echo "$API_RESPONSE" | jq -r ".assets[] | select(.name | contains(\"${LIB}\") and .name | contains(\"${PLATFORM}\")) | .browser_download_url" | head -n 1)
+    local DOWNLOAD_LINK=$(echo "${API_RESPONSE}" | jq -r ".assets[] | select(.name | contains(\"${LIB}\") and (.name | contains(\"${PLATFORM}\"))) | .browser_download_url" | head -n 1)
     if [ -z "$DOWNLOAD_LINK" ] || [ "$DOWNLOAD_LINK" == "null" ]; then
         echo "无法找到Apkeep下载链接"
         exit 1
