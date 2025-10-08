@@ -55,8 +55,8 @@ jobs:
           artifacts: "${{ github.event.inputs.server_name }}-V.${{ env.VERSION }}.7z.*"
           allowUpdates: true
           body: |
-            如果你游玩的是国外服务器，请下载[XAPK Installer](XAPK-Installer.apk)进行安装
-            If you are playing on a non-Chinese server, please download [XAPK Installer](XAPK-Installer.apk) for installation.
+            如果你游玩的是国外服务器，请下载[XAPK Installer](https://github.com/XiYueHura/Azurlane-Build/raw/main/XAPK-Installer.apk)进行安装
+            If you are playing on a non-Chinese server, please download [XAPK Installer](https://github.com/XiYueHura/Azurlane-Build/raw/main/XAPK-Installer.apk) for installation.
             <details>
               <summary>中文安装说明 - 点击展开</summary>
                 1. 在下方列表中找到你需要的版本前缀，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（例如你需要B服，那么你就下载以BiliBili开头的文件）</br>
