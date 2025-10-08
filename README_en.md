@@ -13,7 +13,6 @@
 
 - **Risk Warning**: Using mods may involve unknown risks. If you insist on using them, remember this:**You accept all responsibility for any consequences, including account bans.**
 - **Login Issues**: Repackaged APKs have signatures different from the official version, which may cause third-party authorization login to fail. Prioritize using QR code or verification code login.
-- **Global Server Usage**: Before playing on global servers, be sure to check the [Global Server Usage Guide](Global.md); otherwise, you may be unable to enter the game.
 - **Issue Reporting**: If you encounter problems such as permission request screens not popping up or floating windows not displaying, please submit an Issue.
 
 ---

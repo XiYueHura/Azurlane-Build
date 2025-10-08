@@ -1,36 +1,24 @@
-# 工作流名称
 name: CN AzurLane JMBQ Build Work
-
-# 触发器：使用手动触发，并定义输入参数
 on:
   workflow_dispatch:
     inputs:
       server_name:
-        description: '区服名称-必须（易于分辨）'
-        required: true
-        type: string
-        default: ''
-      apk_name:
-        description: '取个文件名-（如果不知道写啥，请填入中文的拼音即可，全英文且不包含空格，例如 百度服 请填入 baidu 即可）'
+        description: '区服名称-必须（必须是英文字母！例如 Bilibili）'
         required: true
         type: string
         default: ''
       download_url:
-        description: 'APK下载链接（务必填入直链，最好使用国外云盘的直链，例如Google云盘）'
+        description: 'APK下载链接（只能填入直链，最好使用国外云盘的直链，例如Google云盘）'
         required: true
         type: string
         default: ''
 
-# 定义一个任务（Job）
 jobs:
   build:
-    # 运行此任务的操作系统环境
     runs-on: ubuntu-latest
-    # 授予任务对仓库内容的写入权限，以便创建和上传 Release 资产
     permissions:
       contents: write
 
-    # 任务步骤
     steps:
       # 步骤1：检出仓库代码
       - name: Checkout code
@@ -56,33 +44,28 @@ jobs:
       - name: Build APK
         run: |
           chmod +x cn_build.sh
-          ./cn_build.sh "${{ github.event.inputs.server_name }}" "${{ github.event.inputs.apk_name }}" "${{ github.event.inputs.download_url }}"
+          ./cn_build.sh "${{ github.event.inputs.server_name }}" "${{ github.event.inputs.download_url }}"
 
       # 步骤6：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          # 使用 `tag` 参数定义 Release 的标签
           tag: "${{ env.JMBQ_VERSION }}-CN"
-          # 使用 `name` 参数定义 Release 的名称
           name: "AzurLane JMBQ ${{ env.JMBQ_VERSION }} Build CN"
-          # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
           artifacts: "${{ github.event.inputs.server_name }}-V.${{ env.VERSION }}.7z.*"
-          # 允许更新已存在的 Release
           allowUpdates: true
-          # 添加 Release 说明
           body: |
+            如果你游玩的是国外服务器，请下载[XAPK Installer](XAPK-Installer.apk)进行安装
+            If you are playing on a non-Chinese server, please download [XAPK Installer](XAPK-Installer.apk) for installation.
             <details>
               <summary>中文安装说明 - 点击展开</summary>
                 1. 在下方列表中找到你需要的版本前缀，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（例如你需要B服，那么你就下载以BiliBili开头的文件）</br>
                 2. 解压时只需要选择"XXX.7z.001"解压即可</br>
-                3. 在解压后的文件夹中找到apk文件并安装</br>
-                4. 如果你游玩的是国外服务器，请将文件内的obb文件按照 Global.md 中的说明移入正确的文件夹内才可正常游玩，国内服务器忽略该条
+                3. 在解压后的文件夹中找到apk文件并安装
             </details>
             <details>
               <summary>English Installation Instructions - Click to expand</summary>
                 1. Find the version prefix you need in the list below, and download all files ending with 7z.00* that have that server name prefix (e.g., if you need the Bilibili version, download files starting with "BiliBili")</br>
                 2. When extracting, simply select the "XXX.7z.001" file to decompress</br>
-                3. Find the APK file in the extracted folder and install it</br>
-                4. If you are playing on international servers, please move the OBB files from the folder to the correct directory according to the instructions in Global_en.md to ensure proper gameplay. This step should be skipped for servers within China.
+                3. Find the APK file in the extracted folder and install it
             </details>

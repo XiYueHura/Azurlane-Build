@@ -1,199 +1,65 @@
-# 工作流名称
-name: AzurLane JMBQ Build Work
+name: Non-CN AzurLane JMBQ Build Work
 
-# 触发器：使用手动触发，并定义输入参数
 on:
   workflow_dispatch:
     inputs:
       region:
-        description: '选择区服'
+        description: 'Select Game Server'
         required: true
         type: choice
         options:
+          - 'TW'
           - 'EN'
           - 'JP'
           - 'KR'
-          - 'TW'
-          - 'CN'
-          - 'OTHER'
-      region_id:
-        description: '区服名称-必须（易于分辨）'
-        required: true
-        type: string
-        default: ''
-      bundle_id:
-        description: '包名-仅OTHER需要填写（如果不知道确切包名，请填入中文的拼音即可，全英文且不包含空格，例如 百度服 请填入 baidu 即可）'
-        required: false
-        type: string
-        default: ''
-      download_url:
-        description: 'APK下载链接-仅CN和OTHER需要填写（务必填入直链，最好使用国外云盘的直链，例如Google云盘）'
-        required: false
-        type: string
-        default: ''
 
-# 定义一个任务（Job）
 jobs:
   build:
-    # 运行此任务的操作系统环境
     runs-on: ubuntu-latest
-    # 授予任务对仓库内容的写入权限，以便创建和上传 Release 资产
     permissions:
       contents: write
 
-    # 任务步骤
     steps:
-      # 步骤1：检出仓库代码
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # 步骤2：确定 Bundle ID 和下载链接
-      - name: Determine Bundle ID and Download URL
-        id: bundle_config
-        run: |
-          case "${{ github.event.inputs.region }}" in
-          "EN")
-            echo "BUNDLE_ID=com.YoStarEN.AzurLane" >> $GITHUB_ENV
-            ;;
-          "JP")
-            echo "BUNDLE_ID=com.YoStarJP.AzurLane" >> $GITHUB_ENV
-            ;;
-          "KR")
-            echo "BUNDLE_ID=kr.txwy.and.blhx" >> $GITHUB_ENV
-            ;;
-          "TW")
-            echo "BUNDLE_ID=com.hkmanjuu.azurlane.gp" >> $GITHUB_ENV
-            ;;
-          "CN")
-          if [ -z "${{ github.event.inputs.download_url }}" ]; then
-              echo "错误：在区服选择CN时需手动填入APK下载地址,链接必须为直链！"
-              exit 1
-            fi
-
-            echo "BUNDLE_ID=com.bilibili.azurlane" >> $GITHUB_ENV
-            echo "DOWNLOAD_URL=${{ github.event.inputs.download_url }}" >> $GITHUB_ENV
-            ;;
-          "OTHER")
-            # 验证输入参数
-            if [ -z "${{ github.event.inputs.bundle_id }}" ]; then
-              echo "错误：在区服选择other时需手动填入包名或易于分辨的英文名称！"
-              exit 1
-            fi
-            if [ -z "${{ github.event.inputs.download_url }}" ]; then
-              echo "错误：在区服选择other时需手动填入APK下载地址,链接必须为直链！"
-              exit 1
-            fi
-            
-            echo "BUNDLE_ID=other" >> $GITHUB_ENV
-            echo "ACTUAL_BUNDLE_ID=${{ github.event.inputs.bundle_id }}" >> $GITHUB_ENV
-            echo "DOWNLOAD_URL=${{ github.event.inputs.download_url }}" >> $GITHUB_ENV
-            ;;
-          esac
-          echo "REGION=${{ github.event.inputs.region }}" >> $GITHUB_ENV
-        shell: bash
       
-      # 步骤3：设置 Java JDK
       - name: Setup Java JDK
         uses: actions/setup-java@v3.3.0
         with:
           java-version: "17"
           distribution: "adopt"
 
-      # 步骤4：设置 Android SDK
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      # 步骤5：安装 build-tools
       - name: Install build-tools
         run: |
           yes | sdkmanager --install "build-tools;35.0.0"
-
-      # 步骤6：获取JMBQ最新版本下载链接和版本号
-      - name: Get JMBQ download link and version
-        run: |
-          # 获取最新的release信息
-          RELEASE_INFO=$(curl -s https://api.github.com/repos/JMBQ/azurlane/releases/latest)
-          
-          # 提取下载链接
-          DOWNLOAD_LINK=$(echo "$RELEASE_INFO" | jq -r '.assets[0].browser_download_url')
-          echo "DOWNLOAD_LINK=$DOWNLOAD_LINK" >> $GITHUB_ENV
-          
-          # 提取版本号（tag_name）
-          JMBQ_VERSION=$(echo "$RELEASE_INFO" | jq -r '.tag_name')
-          echo "JMBQ_VERSION=$JMBQ_VERSION" >> $GITHUB_ENV
-          echo "获取到JMBQ版本: $JMBQ_VERSION"
       
-      # 步骤7：构建 APK 文件
-      - name: Build JMBQ APK
+      - name: Build APK
         run: |
-          chmod +x build_apk.sh
-          
-          if [ "${{ env.BUNDLE_ID }}" = "other" ]; then
-            ./build_apk.sh other "${{ env.ACTUAL_BUNDLE_ID }}" "${{ env.DOWNLOAD_URL }}"
-          elif [ "${{ env.BUNDLE_ID }}" = "com.bilibili.azurlane" ]; then
-            ./build_apk.sh "${{ env.BUNDLE_ID }}" "${{ env.DOWNLOAD_URL }}"
-          else
-            ./build_apk.sh "${{ env.BUNDLE_ID }}"
-          fi
+          chmod +x build.sh
+          ./build.sh "${{ github.event.inputs.region }}"
 
-      # 步骤8：分卷压缩 build 文件夹
-      - name: Create split archives from build folder
-        run: |
-          # 检查 build 文件夹是否存在
-          if [ ! -d "build" ]; then
-            echo "错误: build 文件夹不存在！"
-            exit 1
-          fi
-          
-          # 检查 build 文件夹中是否有文件
-          if [ -z "$(ls -A build)" ]; then
-            echo "错误: build 文件夹为空！"
-            exit 1
-          fi
-          
-          echo "build 文件夹内容:"
-          ls -la build/
-          
-          # 直接压缩整个 build 文件夹
-          echo "正在压缩 build 文件夹..."
-          7z a -v1000M -x!*.idsig "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z" build/
-          
-          echo "生成的分卷文件:"
-          ls -lh "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z"*      
-
-      # 步骤9：获取北京时间
-      - name: Set Beijing time
-        id: time_setter
-        run: |
-          BEIJING_TIME=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
-          echo "BUILD_TIME=$BEIJING_TIME" >> $GITHUB_ENV
-          echo "构建时间（北京时间）: $BEIJING_TIME"
-
-      # 步骤10：创建 Release 并上传所有分卷文件
       - name: Release and Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          # 使用 `tag` 参数定义 Release 的标签
-          tag: "${{ env.JMBQ_VERSION }}"
-          # 使用 `name` 参数定义 Release 的名称
-          name: "AzurLane JMBQ ${{ env.JMBQ_VERSION }} Build"
-          # `artifacts` 参数支持通配符，可以直接匹配所有分卷文件
-          artifacts: "${{ github.event.inputs.region_id }} Game_Version-${{ env.VERSION }} JMBQ_Version-${{ env.JMBQ_VERSION }}.7z.*"
-          # 允许更新已存在的 Release
+          tag: "${{ env.JMBQ_VERSION }}-Non-CN"
+          name: "AzurLane JMBQ ${{ env.JMBQ_VERSION }} Build Non-CN"
+          artifacts: "${{ github.event.inputs.region }}-V.${{ env.VERSION }}.7z.*"
           allowUpdates: true
-          # 添加 Release 说明
           body: |
+            如果你游玩的是国外服务器，请下载[XAPK Installer](XAPK-Installer.apk)进行安装
+            If you are playing on a non-Chinese server, please download [XAPK Installer](XAPK-Installer.apk) for installation.
             <details>
               <summary>中文安装说明 - 点击展开</summary>
                 1. 在下方列表中找到你需要的版本前缀，下载该服务器名称前缀的所有以 7z.00* 结尾的文件（例如你需要B服，那么你就下载以BiliBili开头的文件）</br>
                 2. 解压时只需要选择"XXX.7z.001"解压即可</br>
-                3. 在解压后的文件夹中找到apk文件并安装</br>
-                4. 如果你游玩的是国外服务器，请将文件内的obb文件按照 [外服使用方法](Global.md) 中的说明移入正确的文件夹内才可正常游玩，国内服务器忽略该条
+                3. 在解压后的文件夹中找到apk文件并安装
             </details>
             <details>
               <summary>English Installation Instructions - Click to expand</summary>
                 1. Find the version prefix you need in the list below, and download all files ending with 7z.00* that have that server name prefix (e.g., if you need the Bilibili version, download files starting with "BiliBili")</br>
                 2. When extracting, simply select the "XXX.7z.001" file to decompress</br>
-                3. Find the APK file in the extracted folder and install it</br>
-                4. If you are playing on international servers, please move the OBB files from the folder to the correct directory according to the instructions in [Global Server Usage](Global_en.md) to ensure proper gameplay. This step should be skipped for servers within China.
+                3. Find the APK file in the extracted folder and install it
             </details>
