@@ -111,7 +111,7 @@ DOWNLOAD_MOD_MENU() {
 
 # 下载XAPK
 DOWNLOAD_APK() {
-    "${DOWNLOAD_DIR}/apkeep" -a "${GAME_BUNDLE_ID}" -o "${DOWNLOAD_DIR}/"
+    "${DOWNLOAD_DIR}/apkeep" -a "${GAME_BUNDLE_ID}" "${DOWNLOAD_DIR}/"
     if [ $? -ne 0 ]; then
         echo "XAPK 下载失败！"
         exit 1
