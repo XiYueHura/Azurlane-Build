@@ -1,5 +1,4 @@
-<div align="center">
-    <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="Visitor Count" />
+<img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="Visitor Count" />
 
 # ♿ AzurLane JMBQ Build Releases
 
@@ -19,9 +18,7 @@
 
 ## 🎉 Latest News
 
-**9/21 - JMBQ Version 2.9 has been fully updated. Welcome to share your user experience feedback.**
-
-<img alt="Preview" src="https://pic1.imgdb.cn/item/68cf6c76c5157e1a8820fff4.png" />
+**10/26 - JMBQ Version 3.0 has been fully updated. Welcome to share your user experience feedback.**
 
 ---
 
@@ -31,17 +28,17 @@
 
 | Server               | JMBQ Version | Status                          |
 |----------------------|--------------|---------------------------------|
-| **Bilibili Server**  | 2.9          | Build✅ <br>Load✅ <br>Features✅ |
-| **Tencent Server** | 2.9       | Build✅ <br>Load✅ <br>Features❔ |
-| **4399 Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **Xiaomi Server**    | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **Uc Server**     | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **Vivo Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **OPPO Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **360 Server**      | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **EN Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **JP Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
-| **TW Server**        | 2.9          | Build✅ <br>Load✅ <br>Features❔ |
+| **Bilibili Server**  | 3.0          | Build✅ <br>Load✅ <br>Features✅ |
+| **Tencent Server** | 3.0       | Build✅ <br>Load✅ <br>Features❔ |
+| **4399 Server**      | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **Xiaomi Server**    | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **Uc Server**     | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **Vivo Server**      | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **OPPO Server**      | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **360 Server**      | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **EN Server**        | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **JP Server**        | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
+| **TW Server**        | 3.0          | Build✅ <br>Load✅ <br>Features❔ |
 | **KR Server**        | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 | **Huawei Server**    | 2.7          | Build✅ <br>Load❌ <br>Features❌ |
 
@@ -68,5 +65,3 @@
 ## 📊 Star History
 
 [![Star History Chart](https://starchart.cc/XiYueHura/Azurlane-Build.svg?variant=adaptive)](https://starchart.cc/XiYueHura/Azurlane-Build)
-
-</div>
