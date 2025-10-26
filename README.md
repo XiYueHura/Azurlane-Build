@@ -1,5 +1,4 @@
-<div align="center">
-    <img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="访问计数" />
+<img src="https://count.getloli.com/@azurlanejmbq?name=azurlanejmbq&theme=moebooru&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt="访问计数" />
 
 # ♿ AzurLane JMBQ 构建发布
 
@@ -66,5 +65,3 @@
 ## 📊 Star 历史
 
 [![Star History Chart](https://starchart.cc/XiYueHura/Azurlane-Build.svg?variant=adaptive)](https://starchart.cc/XiYueHura/Azurlane-Build)
-
-</div>
