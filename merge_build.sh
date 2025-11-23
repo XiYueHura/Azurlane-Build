@@ -112,12 +112,13 @@ DOWNLOAD_APKTOOL() {
 DOWNLOAD_MOD_MENU() {
     local OWNER="JMBQ"
     local REPO="azurlane"
-    local FILENAME="MOD_MENU.zip"
+    local FILENAME="MOD_MENU.rar"
 
     echo "正在下载MOD补丁..."
     local API_RESPONSE=$(curl -s "https://api.github.com/repos/${OWNER}/${REPO}/releases/latest")
     local JMBQ_VERSION=$(echo "${API_RESPONSE}" | jq -r '.tag_name')
-    local DOWNLOAD_LINK=$(echo "${API_RESPONSE}" | jq -r '.assets[0].browser_download_url')
+    # 修改：查找name中含有.rar的文件，而不是直接使用第一个assets
+    local DOWNLOAD_LINK=$(echo "${API_RESPONSE}" | jq -r '.assets[] | select(.name | contains(".rar")) | .browser_download_url' | head -n 1)
 
     if [ -z "${DOWNLOAD_LINK}" ] || [ "${DOWNLOAD_LINK}" == "null" ]; then
         echo "无法获取MOD Patch文件下载链接"
@@ -132,11 +133,26 @@ DOWNLOAD_MOD_MENU() {
         exit 1
     fi
 
-    unzip -q "${DOWNLOAD_DIR}/${FILENAME}" -d "${DOWNLOAD_DIR}/JMBQ"
+    # 修改：使用unrar解压而不是unzip
+    if command -v unrar &> /dev/null; then
+        echo "使用unrar解压文件..."
+        unrar x -o+ "${DOWNLOAD_DIR}/${FILENAME}" "${DOWNLOAD_DIR}/JMBQ"
+    else
+        echo "未找到unrar命令，尝试使用7z解压..."
+        if command -v 7z &> /dev/null; then
+            7z x -y "${DOWNLOAD_DIR}/${FILENAME}" -o"${DOWNLOAD_DIR}/JMBQ"
+        else
+            echo "错误: 未找到unrar或7z工具，无法解压RAR文件！"
+            exit 1
+        fi
+    fi
+    
     if [ $? -ne 0 ]; then
         echo "错误: 解压 ${FILENAME} 失败！"
         exit 1
     fi
+    echo "JMBQ目录内容:"  
+    ls -la "${DOWNLOAD_DIR}/JMBQ" 2>/dev/null || echo "无法列出目录内容"
 
     echo "JMBQ_VERSION=${JMBQ_VERSION}" >> "${GITHUB_ENV}"
 }
@@ -243,13 +259,19 @@ PATCH_APK() {
     MAX_CLASS_NUM=${MAX_CLASS_NUM:-3}
     local NEW_CLASS_NUM=$((MAX_CLASS_NUM + 1))
     local NEW_SMALI_DIR="smali_classes${NEW_CLASS_NUM}"
-    local SRC_DIR=$(find "${DOWNLOAD_DIR}/JMBQ" -maxdepth 1 -type d -name "smali_classes*")
+    
+    # 移除maxdepth限制，确保能找到所有smali_classes目录
+    local SRC_DIR=$(find "${DOWNLOAD_DIR}/JMBQ" -type d -name "smali_classes*" 2>/dev/null | head -1)
 
     if [ -z "${SRC_DIR}" ]; then
+        # 添加详细的错误信息，显示JMBQ目录结构
         echo "错误: MOD 补丁目录中未找到 smali_classes 目录！"
+        echo "JMBQ目录内容:"  
+        ls -la "${DOWNLOAD_DIR}/JMBQ" 2>/dev/null || echo "无法列出目录内容"
         exit 1
     fi
-
+    
+    echo "找到MOD补丁目录: ${SRC_DIR}"
     cp -r "${SRC_DIR}" "${DOWNLOAD_DIR}/DECODE_Output/${NEW_SMALI_DIR}" || {
         echo "错误: 复制 smali 文件失败！"
         exit 1
