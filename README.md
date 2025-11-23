@@ -40,6 +40,10 @@
 ```
 
 ---
+## 预览
+![Screenshot_2025-11-23-09-17-23-266_com bilibili azurlane](https://github.com/user-attachments/assets/3d57e120-2444-4a6d-8e0c-afb44f76a9b8)
+
+---
 ## 🚧 已知问题
 以下问题将不会被解决：
 
