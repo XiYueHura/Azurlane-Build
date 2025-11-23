@@ -494,8 +494,8 @@ main() {
         PATCH_APK
         BUILD_APK
         OPTIMIZE_AND_SIGN_APK
-        RENAME_APK
         GET_GAME_VERSION
+        RENAME_APK
     fi
     
     # 共同的后续步骤
