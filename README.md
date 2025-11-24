@@ -10,7 +10,7 @@
     <br />
     <br />
     <a>发现问题？提交</a>
-    <a href="https://github.com/XiYueHura/SheriiBot/issues">Issue</a>
+    <a href="https://github.com/Chtholly344/Azurlane-Build/issues">Issue</a>
   </p>
 
 </div>
