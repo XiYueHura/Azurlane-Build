@@ -42,7 +42,7 @@
     </td>
     <td>
       <a href="https://game.vivo.com.cn/#/detail/56580"><img src="images/vivo.svg">
-    </td>  
+    </td>
     <td>
        <a href="https://a.4399.cn/game-id-107008.html"><img src="images/4399.svg">
     </td>
