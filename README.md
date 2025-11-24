@@ -26,14 +26,36 @@
 ---
 
 ##  各渠道服平台地址
-- 小米：https://app.mi.com/details?id=com.bilibili.blhx.mi 
-- 应用宝：https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx
-- 九游：https://www.9game.cn/bilanhangxian/
-- 4399：page全部引流去自家游戏盒，遂放弃
-- vivo：https://game.vivo.com.cn/#/detail/56580
-- oppo：抓不到包，遂放弃
-- 360：https://app.so.com/detail/index?pname=com.bilibili.blhx.qihoo&id=3804929
-- 魅族：https://game.mlinkapp.com/game/detail/3162763?contentId=3162763
+
+###  ⚠️⚠️⚠️注意！！！
+- **OPPO**和**4399**渠道服请自行下载安装包，上传网盘后获取直链下载
+  
+<div>
+    <td>
+      <a href="https://app.mi.com/details?id=com.bilibili.blhx.mi"><img src="images/xiaomi.svg">
+    </td>
+    <td>
+      <a href="https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx"><img src="images/yingyongbao.svg">
+    </td>
+    <td>
+       <a href="https://www.9game.cn/bilanhangxian"><img src="images/jiuyou.svg">
+    </td>
+    <td>
+      <a href="https://game.vivo.com.cn/#/detail/56580"><img src="images/vivo.svg">
+    </td>  
+    <td>
+       <a href="https://a.4399.cn/game-id-107008.html"><img src="images/4399.svg">
+    </td>
+    <td>
+       <a href="https://game.oppomobile.com/about/index2.html"><img src="images/oppo.svg">
+    </td>
+    <td>
+        <a href="https://app.so.com/detail/index?pname=com.bilibili.blhx.qihoo&id=3804929"><img src="images/360.svg">
+    </td>
+    <td>
+      <a href="https://game.mlinkapp.com/game/detail/3162763?contentId=3162763"><img src="images/meizu.svg">
+    </td>
+<div>
 
 ---
 ## 项目目录
