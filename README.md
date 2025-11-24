@@ -27,7 +27,7 @@
 
 ##  各渠道服平台地址
 - 小米：https://app.mi.com/details?id=com.bilibili.blhx.mi 
-- 应用宝：https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx?&from_wxz=1
+- 应用宝：https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx
 - 九游：https://www.9game.cn/bilanhangxian/
 - 4399：page全部引流去自家游戏盒，遂放弃
 - vivo：https://game.vivo.com.cn/#/detail/56580
