@@ -25,51 +25,36 @@
 
 ---
 
-##  各渠道服平台地址
-
-###  ⚠️⚠️⚠️注意！！！
+## 各渠道服安装包官方下载地址
+⚠️⚠️⚠️ 注意！！！
 - **OPPO**和**4399**渠道服请自行下载安装包，上传网盘后获取直链下载
-  
-<div>
-    <td>
-      <a href="https://app.mi.com/details?id=com.bilibili.blhx.mi"><img src="images/xiaomi.svg">
-    </td>
-    <td>
-      <a href="https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx"><img src="images/yingyongbao.svg">
-    </td>
-    <td>
-       <a href="https://www.9game.cn/bilanhangxian"><img src="images/jiuyou.svg">
-    </td>
-    <td>
-      <a href="https://game.vivo.com.cn/#/detail/56580"><img src="images/vivo.svg">
-    </td>
-    <td>
-       <a href="https://a.4399.cn/game-id-107008.html"><img src="images/4399.svg">
-    </td>
-    <td>
-       <a href="https://game.oppomobile.com/about/index2.html"><img src="images/oppo.svg">
-    </td>
-    <td>
-        <a href="https://app.so.com/detail/index?pname=com.bilibili.blhx.qihoo&id=3804929"><img src="images/360.svg">
-    </td>
-    <td>
-      <a href="https://game.mlinkapp.com/game/detail/3162763?contentId=3162763"><img src="images/meizu.svg">
-    </td>
+
+<div align="center" style="margin: 10px 0;">
+  <a href="https://app.mi.com/details?id=com.bilibili.blhx.mi"><img src="images/xiaomi.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://sj.qq.com/appdetail/com.tencent.tmgp.bilibili.blhx"><img src="images/yingyongbao.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://www.9game.cn/bilanhangxian"><img src="images/jiuyou.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://game.vivo.com.cn/#/detail/56580"><img src="images/vivo.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://a.4399.cn/game-id-107008.html"><img src="images/4399.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://game.oppomobile.com/about/index2.html"><img src="images/oppo.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://app.so.com/detail/index?pname=com.bilibili.blhx.qihoo&id=3804929"><img src="images/360.svg" width="32" style="margin: 0 5px;"></a>
+  <a href="https://game.mlinkapp.com/game/detail/3162763?contentId=3162763"><img src="images/meizu.svg" width="32" style="margin: 0 5px;"></a>
 </div>
 
 ---
 ## 项目目录
 ```
+
 ├── 📁 .github
-│   └── 📁 workflows
-│       ├── ⚙️ main.yml
-│       └── ⚙️ xapk.yml
-├── 📁 key
-│   ├── 📄 testkey.pk8
-│   └── 📄 testkey.x509.pem
-├── ⚙️ .gitignore
-├── 📝 README.md
-└── 📄 merge_build.sh  # 构建脚本
+│└── 📁 workflows
+│├── ⚙️ main.yml
+│└── ⚙️ xapk.yml
+├──📁 key
+│├── 📄 testkey.pk8
+│└── 📄 testkey.x509.pem
+├──⚙️ .gitignore
+├──📝 README.md
+└──📄 merge_build.sh  # 构建脚本
+
 ```
 
 ---
